@@ -8,9 +8,9 @@ import { Document } from "@interfaces/document";
 	providedIn: "root",
 })
 export class DocumentService {
-	private URL = "http://localhost:5000/document";
-	// private URL =
-	// 	"https://js-emlo-f6byg8hvbvhahgfp.northeurope-01.azurewebsites.net/document";
+	// private URL = "http://localhost:5000/document";
+	private URL = "https://js-emlo-f6byg8hvbvhahgfp.northeurope-01.azurewebsites.net/document";
+
 	constructor(private http: HttpClient) {}
 	getAllDocuments(): Observable<Document[]> {
 		return this.http.get<Document[]>(`${this.URL}/all`);
