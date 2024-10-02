@@ -7,11 +7,9 @@
 		"build": "ng build",
 		"watch": "ng build --watch --configuration development",
 		"test": "ng test",
-
 		"build-e": "ng build --base-href '/~emkl21/editor/browser/'",
 		"publish-e": "rsync -av --delete dist/ssr-editor-frontend/ emkl21@ssh.student.bth.se:www/editor",
-
-		"build-l": "ng build --base-href '/~lojn21/editor/browser/'",
+		"build-l": "ng build --base-href '/~lojn22/editor/browser/'",
 		"publish-l": "rsync -av --delete dist/ssr-editor-frontend/ lojn21@ssh.student.bth.se:www/editor"
 	},
 	"private": true,
