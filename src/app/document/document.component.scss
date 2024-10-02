@@ -1,0 +1,67 @@
+@import "../../styles.scss";
+
+.document-listing-details {
+    // max-width: 12rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 12rem;
+    max-height: 18rem;
+    min-height: 16rem;
+    border: solid #9f9f9f 1px;
+    border-radius: 2%;
+    padding: 0 0.8rem;
+
+    p {
+        word-wrap: break-word;
+        word-break: break-all;
+        overflow-wrap: break-word;
+
+        font-size: 0.5rem;
+        overflow-y: hidden;
+    }
+
+    h1 {
+        word-wrap: break-word;
+        word-break: break-all;
+        overflow-wrap: break-word;
+        padding: 0.6rem;
+        font-size: 0.9rem;
+        overflow-y: hidden;
+        margin: 0.6rem 0 0 0;
+    }
+}
+
+#new-doc-title {
+	height: 2.6rem;
+	padding: 0 0.6rem
+}
+
+.inline-form {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}
+
+a {
+    text-decoration: none;
+}
+
+.document-listing {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 3rem;
+    margin: 3rem;
+}
+
+.submit-button {
+    background-color: #0546ff;
+    color: #ffffff;
+    border: none;
+    height: 3rem;
+    min-width: 7rem;
+    font-size: 1.6rem;
+    border-radius: 0.3rem;
+}

@@ -12,24 +12,24 @@ import { Observable } from "rxjs";
 	imports: [CommonModule, RouterModule, ReactiveFormsModule],
 	template: `
 		<section>
-			<form [formGroup]="createNewDocForm" (submit)="submitCreateNewDoc()">
-				<label for="new-doc-title">New document</label>
-				<input type="text" id="new-doc-title" formControlName="title" placeholder="Title"/>
+			<form class="inline-form" [formGroup]="createNewDocForm" (submit)="submitCreateNewDoc()">
 				<button type="submit" class="submit-button">Create</button>
+				<input type="text" id="new-doc-title" formControlName="title" placeholder="Title" />
 			</form>
 		</section>
-		<section>
-			<ul>
-				<li *ngFor="let document of documents">
-					<a [routerLink]="['/document/view/', document._id]">
-						Id: {{ document._id }} Title: {{ document.title }}</a
-					>
-				</li>
-			</ul>
+		<section class="document-listing">
+			<div *ngFor="let document of documents">
+				<a [routerLink]="['/document/view/', document._id]">
+					<div class="document-listing-details ">
+						<h1>{{ document.title }}</h1>
+						<p>{{ document.content }}</p>
+					</div>
+				</a>
+			</div>
 		</section>
 	`,
 	// templateUrl: "./document.component.html",
-	styles: ``,
+	styleUrl: "./document.component.scss",
 })
 export class DocumentComponent implements OnInit {
 	newDoc?: Observable<Document>;
@@ -39,8 +39,8 @@ export class DocumentComponent implements OnInit {
 		content: new FormControl<string>(""),
 	});
 
-	constructor(private documentService: DocumentService) { }
-	private router = inject(Router)
+	constructor(private documentService: DocumentService) {}
+	private router = inject(Router);
 
 	ngOnInit(): void {
 		this.getAllDocuments();
@@ -56,20 +56,18 @@ export class DocumentComponent implements OnInit {
 		this.newDoc = this.documentService.submitCreateNewDoc(
 			this.createNewDocForm.value.title ?? "",
 			this.createNewDocForm.value.content ?? ""
-		)
+		);
 		this.newDoc.subscribe({
 			next: (response) => {
 				if (response._id) {
 					_id = response._id;
 				}
-					this.router.navigate([`document/view/${_id}`]);
-
+				this.router.navigate([`document/view/${_id}`]);
 			},
 			error: (error) => {
 				console.error("Something went wrong:", error);
-				this.router.navigate([""])
-			}
-		})
-
+				this.router.navigate([""]);
+			},
+		});
 	}
 }
