@@ -10,7 +10,7 @@
 		"build-e": "ng build --base-href '/~emkl21/editor/browser/'",
 		"publish-e": "rsync -av --delete dist/ssr-editor-frontend/ emkl21@ssh.student.bth.se:www/editor",
 		"build-l": "ng build --base-href '/~lojn22/editor/browser/'",
-		"publish-l": "rsync -av --delete dist/ssr-editor-frontend/ lojn21@ssh.student.bth.se:www/editor"
+		"publish-l": "rsync -av --delete dist/ssr-editor-frontend/ lojn22@ssh.student.bth.se:www/editor"
 	},
 	"private": true,
 	"dependencies": {
