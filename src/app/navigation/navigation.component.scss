@@ -1,0 +1,56 @@
+@import './../../styles.scss';
+
+nav {
+
+    background-color: $grayish-brown;
+    padding: 10px;
+
+    ul { 
+        list-style-type: none;
+        margin: 0;
+        padding: 0; 
+    
+        li {
+            position: relative;
+        
+
+            a {
+                text-decoration: none;
+                color: white;
+                border-radius: 4px;
+                transition: background-color 0,3s;
+
+                &:hover {
+                    background-color: $tan;
+                }
+            }
+
+            // Dropdown-stil
+            .dropdown {
+                display: none; // Döljer dropdown som standard
+                position: absolute; // Positionerar dropdown relativt till föräldern
+                top: 100%; // Lägger dropdown under länken
+                left: 0; // Justera till vänster
+
+                li {
+                    background-color: $grayish-brown; // Bakgrund för dropdown
+                    border-radius: 4px; // Rundade hörn
+
+                    a {
+                        padding: 8px 16px; // Utrymme för dropdown-länkar
+                        color: white; // Vit text
+                        
+                        &:hover {
+                            background-color: $tan; // Mörkare grön vid hover
+                        }
+                    }
+                }
+            }
+
+            // Visa dropdown när föräldern är hoverad
+            &:hover .dropdown {
+                display: block; // Visa dropdown
+            }
+        }
+    }
+}
