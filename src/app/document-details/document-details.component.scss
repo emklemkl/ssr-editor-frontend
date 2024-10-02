@@ -1,4 +1,98 @@
-section {
+@import "../../styles.scss";
+
+form {
+	max-width: 740px;
+	margin: 0 auto;
+	margin-top: 42px;
+	padding: 20px;
+	background-color: #fff;
+	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+	border-radius: 8px;
+	font-family: 'Georgia', serif;
+  }
+  
+  section {
 	display: flex;
 	flex-direction: column;
-}
+	gap: 20px;
+  }
+  
+  input[type="text"] {
+	width: 95%;
+	padding: 12px;
+	border: 1px solid #d0d0d0;
+	border-radius: 4px;
+	font-size: 16px;
+	line-height: 1.6;
+	background-color: #f9f9f9;
+  }
+  
+  input[type="text"]:focus {
+	border-color: #4a90e2;
+	background-color: #fff;
+	outline: none;
+	box-shadow: 0 0 5px rgba(74, 144, 226, 0.5);
+  }
+
+  textarea {
+	width: 95%;
+	height: 300px;
+	padding: 12px;
+	border: 1px solid #d0d0d0;
+	border-radius: 4px;
+	font-size: 16px;
+	line-height: 1.2;
+	background-color: #f9f9f9;
+  }
+  
+  .submit-button {
+	display: flex;
+	padding: 10px 23px;
+	margin-left: 43%;
+	border: none;
+	border-radius: 4px;
+	width: 15%;
+	background-color: $warm-orange;
+	color: #fff;
+	font-size: 19px;
+	cursor: pointer;
+	transition: background-color 0.3s;
+  }
+  
+  .submit-button:hover {
+	background-color: $light-tan;
+  }
+  
+  .submit-button:focus {
+	outline: none;
+  }
+  
+  input[type="text"]::placeholder {
+	color: #aaa;
+  }
+  
+  /* Gör att det ser ut som ett papper */
+  form {
+	border: 1px solid #dcdcdc;
+	background-color: #fdfdfd;
+  }
+  
+  body {
+	background-color: #f0f0f0;
+	margin: 20px;
+	font-family: 'Georgia', serif;
+	font-size: 14px;
+	color: #333;
+  }
+  
+  /* Textstil för att likna ett dokument */
+  input[type="text"] {
+	font-family: 'Georgia', serif;
+	color: #333;
+	background-color: #fafafa;
+  }
+  
+  button {
+	font-family: 'Georgia', serif;
+  }
+  

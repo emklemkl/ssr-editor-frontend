@@ -14,8 +14,8 @@ import { FormControl, FormGroup, ReactiveFormsModule } from "@angular/forms";
 	template: `
 		<form [formGroup]="updateDocForm" (submit)="submitUpdateDoc()">
 			<section class="" *ngIf="document$ | async as document">
-				<input type="text" formControlName="title" />
-				<input type="text" formControlName="content" />
+				<input type="text" formControlName="title" placeholder="Titel" />
+				<textarea type="text" formControlName="content"></textarea>
 				<button type="submit" class="submit-button">Update</button>
 			</section>
 		</form>
