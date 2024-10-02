@@ -3,20 +3,13 @@ import { DocumentService } from "@services/document.service";
 import { Document } from "@interfaces/document";
 import { CommonModule } from "@angular/common";
 import { RouterModule, Router } from "@angular/router";
-import { FormControl, FormGroup, ReactiveFormsModule } from "@angular/forms";
 import { Observable } from "rxjs";
 
 @Component({
 	selector: "app-document",
 	standalone: true,
-	imports: [CommonModule, RouterModule, ReactiveFormsModule],
+	imports: [CommonModule, RouterModule],
 	template: `
-		<section>
-			<form class="inline-form" [formGroup]="createNewDocForm" (submit)="submitCreateNewDoc()">
-				<button type="submit" class="submit-button">Create</button>
-				<input type="text" id="new-doc-title" formControlName="title" placeholder="Title" />
-			</form>
-		</section>
 		<section class="document-listing">
 			<div *ngFor="let document of documents">
 				<a [routerLink]="['/document/view/', document._id]">
@@ -34,13 +27,8 @@ import { Observable } from "rxjs";
 export class DocumentComponent implements OnInit {
 	newDoc?: Observable<Document>;
 	documents: Document[] = [];
-	createNewDocForm = new FormGroup({
-		title: new FormControl<string>(""),
-		content: new FormControl<string>(""),
-	});
 
 	constructor(private documentService: DocumentService) {}
-	private router = inject(Router);
 
 	ngOnInit(): void {
 		this.getAllDocuments();
@@ -48,26 +36,6 @@ export class DocumentComponent implements OnInit {
 	getAllDocuments() {
 		this.documentService.getAllDocuments().subscribe((doc) => {
 			this.documents = doc;
-		});
-	}
-
-	submitCreateNewDoc() {
-		let _id: string;
-		this.newDoc = this.documentService.submitCreateNewDoc(
-			this.createNewDocForm.value.title ?? "",
-			this.createNewDocForm.value.content ?? ""
-		);
-		this.newDoc.subscribe({
-			next: (response) => {
-				if (response._id) {
-					_id = response._id;
-				}
-				this.router.navigate([`document/view/${_id}`]);
-			},
-			error: (error) => {
-				console.error("Something went wrong:", error);
-				this.router.navigate([""]);
-			},
 		});
 	}
 }

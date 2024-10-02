@@ -32,17 +32,6 @@
     }
 }
 
-#new-doc-title {
-	height: 2.6rem;
-	padding: 0 0.6rem
-}
-
-.inline-form {
-    display: flex;
-    flex-direction: row;
-    gap: 1rem;
-}
-
 a {
     text-decoration: none;
 }
@@ -54,14 +43,4 @@ a {
     justify-content: center;
     gap: 3rem;
     margin: 3rem;
-}
-
-.submit-button {
-    background-color: #0546ff;
-    color: #ffffff;
-    border: none;
-    height: 3rem;
-    min-width: 7rem;
-    font-size: 1.6rem;
-    border-radius: 0.3rem;
 }
