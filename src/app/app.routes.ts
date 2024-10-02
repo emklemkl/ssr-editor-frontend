@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { DocumentComponent } from './document/document.component';
 import { HomeComponent } from './home/home.component';
+import { DocumentDetailsComponent } from './document-details/document-details.component';
 
 export const routes: Routes = [
 	{
@@ -10,7 +11,7 @@ export const routes: Routes = [
 	},
 	{
 		path: "document/view/:id",
-		component: DocumentComponent,
+		component: DocumentDetailsComponent,
 		title: "Document"
 	},
 	{
