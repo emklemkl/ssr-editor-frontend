@@ -1,11 +1,11 @@
-import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Observable } from "rxjs";
 import { Document } from "@interfaces/document";
+import { Observable } from "rxjs";
 // Define an interface for the document structure
 
 @Injectable({
-	providedIn: "root",
+	providedIn: "root"
 })
 export class DocumentService {
 	// private URL = "http://localhost:5000/document";
@@ -21,7 +21,7 @@ export class DocumentService {
 	submitCreateNewDoc(title: string, content: string): Observable<Document> {
 		const body = {
 			title: title,
-			content: content,
+			content: content
 		};
 		return this.http.post<Document>(`${this.URL}/create`, body);
 	}
@@ -29,8 +29,9 @@ export class DocumentService {
 		const body = {
 			_id: _id,
 			title: title,
-			content: content,
+			content: content
 		};
+
 		return this.http.put<Document>(`${this.URL}/update`, body);
 	}
 }

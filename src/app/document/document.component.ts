@@ -1,8 +1,8 @@
-import { Component, inject, OnInit } from "@angular/core";
-import { DocumentService } from "@services/document.service";
-import { Document } from "@interfaces/document";
 import { CommonModule } from "@angular/common";
-import { RouterModule, Router } from "@angular/router";
+import { Component, OnInit } from "@angular/core";
+import { RouterModule } from "@angular/router";
+import { Document } from "@interfaces/document";
+import { DocumentService } from "@services/document.service";
 import { Observable } from "rxjs";
 
 @Component({
@@ -22,7 +22,7 @@ import { Observable } from "rxjs";
 		</section>
 	`,
 	// templateUrl: "./document.component.html",
-	styleUrl: "./document.component.scss",
+	styleUrl: "./document.component.scss"
 })
 export class DocumentComponent implements OnInit {
 	newDoc?: Observable<Document>;

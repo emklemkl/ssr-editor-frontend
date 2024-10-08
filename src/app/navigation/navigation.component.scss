@@ -1,65 +1,66 @@
-@import './../../styles.scss';
+@import "./../../styles.scss";
 
 nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: $grayish-brown;
-    padding: 1rem 2rem;
-    height: 4rem;
-    font-size: 1.8rem;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	background-color: $grayish-brown;
+	padding: 1rem 2rem;
+	height: 4rem;
+	font-size: 1.8rem;
 
-    ul {
-        list-style-type: none;
+	ul {
+		list-style-type: none;
 
-        margin: 0;
-        padding: 0;
+		margin: 0;
+		padding: 0;
 
-        li {
-            position: relative;
+		li {
+			position: relative;
 
+			a {
+				display: flex;
+				align-items: center;
+				text-decoration: none;
+				color: white;
+				border-radius: 4px;
+				transition:
+					background-color 0,
+					3s;
 
-            a {
-                display: flex;
-                align-items: center;
-                text-decoration: none;
-                color: white;
-                border-radius: 4px;
-                transition: background-color 0, 3s;
+				&:hover {
+					background-color: $tan;
+				}
+			}
 
-                &:hover {
-                    background-color: $tan;
-                }
-            }
+			// Dropdown-stil
+			.dropdown {
+				display: none; // Döljer dropdown som standard
+				position: absolute; // Positionerar dropdown relativt till föräldern
+				min-width: 20vw;
+				top: 100%; // Lägger dropdown under länken
+				left: 0; // Justera till vänster
 
-            // Dropdown-stil
-            .dropdown {
-                display: none; // Döljer dropdown som standard
-                position: absolute; // Positionerar dropdown relativt till föräldern
-                min-width: 20vw;
-                top: 100%; // Lägger dropdown under länken
-                left: 0; // Justera till vänster
+				li {
+					background-color: lighten($grayish-brown, 14%); // Bakgrund för dropdown
+					border-radius: 4px; // Rundade hörn
+					border: solid 1px darken($grayish-brown, 14%);
 
-                li {
-                    background-color: lighten($grayish-brown, 14%); // Bakgrund för dropdown
-                    border-radius: 4px; // Rundade hörn
-                    border: solid 1px darken($grayish-brown, 14%);
+					a {
+						padding: 8px 16px; // Utrymme för dropdown-länkar
+						color: white; // Vit text
 
-                    a {
-                        padding: 8px 16px; // Utrymme för dropdown-länkar
-                        color: white; // Vit text
+						&:hover {
+							background-color: $tan; // Mörkare grön vid hover
+						}
+					}
+				}
+			}
 
-                        &:hover {
-                            background-color: $tan; // Mörkare grön vid hover
-                        }
-                    }
-                }
-            }
-
-            // Visa dropdown när föräldern är hoverad
-            &:hover .dropdown {
-                display: block; // Visa dropdown
-            }
-        }
-    }
+			// Visa dropdown när föräldern är hoverad
+			&:hover .dropdown {
+				display: block; // Visa dropdown
+			}
+		}
+	}
 }
