@@ -1,10 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
-$light-tan: #CA9F62;
-$tan: #A08968;
-$warm-orange: #F5AF4E;
-$grayish-brown: #756D60;
+$light-tan: #ca9f62;
+$tan: #a08968;
+$warm-orange: #f5af4e;
+$grayish-brown: #756d60;
 $dark-brown: #483924;
-$deep-brown: #332B21;
+$deep-brown: #332b21;
 
 $bright-red: #ef0812;
 $blue: #0546ff;
@@ -13,21 +13,21 @@ $purple: #9b11ed;
 $white-ish: #f0f0f0;
 
 body {
-    font-size: 16px;
+	font-size: 16px;
 	margin: 0;
-    /* Define base font size */
+	/* Define base font size */
 }
 
 h1 {
-    font-size: 2rem;
-    /* Two times the base font size */
+	font-size: 2rem;
+	/* Two times the base font size */
 }
 
 p {
-    font-size: 1.2rem;
-    /* 1.2 times the font size of the parent element */
+	font-size: 1.2rem;
+	/* 1.2 times the font size of the parent element */
 }
 
 textarea {
-    font-size: 1.1rem;
+	font-size: 1.1rem;
 }

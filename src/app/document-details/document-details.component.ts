@@ -1,9 +1,9 @@
-import { Component, Input, OnInit } from "@angular/core";
-import { DocumentService } from "@services/document.service";
-import { Document } from "@interfaces/document";
-import { Observable } from "rxjs";
 import { CommonModule } from "@angular/common";
+import { Component, Input, OnInit } from "@angular/core";
 import { FormControl, FormGroup, ReactiveFormsModule } from "@angular/forms";
+import { Document } from "@interfaces/document";
+import { DocumentService } from "@services/document.service";
+import { Observable } from "rxjs";
 // import { CommonModule } from "@angular/common";
 
 @Component({
@@ -20,38 +20,36 @@ import { FormControl, FormGroup, ReactiveFormsModule } from "@angular/forms";
 			</section>
 		</form>
 	`,
-	styleUrl: "./document-details.component.scss",
+	styleUrl: "./document-details.component.scss"
 })
 export class DocumentDetailsComponent implements OnInit {
-	@Input("id") documentId: string = "";
+	@Input() id = "";
 	document$!: Observable<Document>;
 
 	updateDocForm = new FormGroup({
 		title: new FormControl<string>(""),
-		content: new FormControl<string>(""),
+		content: new FormControl<string>("")
 	});
 	constructor(private documentService: DocumentService) {}
 
 	ngOnInit(): void {
-		this.document$ = this.documentService.getDocument(this.documentId);
+		this.document$ = this.documentService.getDocument(this.id);
 
 		this.document$.subscribe((document) => {
 			this.updateDocForm.patchValue({
 				title: document.title,
-				content: document.content,
+				content: document.content
 			});
 		});
 	}
 
 	submitUpdateDoc() {
-		this.documentService.submitUpdateDoc(
-			this.documentId,
-			this.updateDocForm.value.title ?? "",
-			this.updateDocForm.value.content ?? ""
-		).subscribe({
-			error: (error) => {
-				console.error("Something went wrong:", error);
-			},
-		});
+		this.documentService
+			.submitUpdateDoc(this.id, this.updateDocForm.value.title ?? "", this.updateDocForm.value.content ?? "")
+			.subscribe({
+				error: (error) => {
+					console.error("Something went wrong:", error);
+				}
+			});
 	}
 }

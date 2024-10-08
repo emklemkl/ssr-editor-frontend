@@ -1,8 +1,8 @@
-import { Component, inject, OnInit } from "@angular/core";
-import { DocumentService } from "@services/document.service";
-import { Document } from "@interfaces/document";
-import { RouterModule, Router } from "@angular/router";
+import { Component, inject } from "@angular/core";
 import { FormControl, FormGroup, ReactiveFormsModule } from "@angular/forms";
+import { Router, RouterModule } from "@angular/router";
+import { Document } from "@interfaces/document";
+import { DocumentService } from "@services/document.service";
 import { Observable } from "rxjs";
 
 @Component({
@@ -16,13 +16,13 @@ import { Observable } from "rxjs";
 		</form>
 	`,
 	//   templateUrl: './document-create.component.html',
-	styleUrl: "./document-create.component.scss",
+	styleUrl: "./document-create.component.scss"
 })
 export class DocumentCreateComponent {
 	newDoc?: Observable<Document>;
 	createNewDocForm = new FormGroup({
 		title: new FormControl<string>(""),
-		content: new FormControl<string>(""),
+		content: new FormControl<string>("")
 	});
 
 	constructor(private documentService: DocumentService) {}
@@ -44,7 +44,7 @@ export class DocumentCreateComponent {
 			error: (error) => {
 				console.error("Something went wrong:", error);
 				this.router.navigate([""]);
-			},
+			}
 		});
 	}
 }

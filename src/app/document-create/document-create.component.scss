@@ -1,23 +1,23 @@
 @import "../../styles.scss";
 
 #new-doc-title {
-    height: 2.6rem;
-    padding: 0 0.6rem
+	height: 2.6rem;
+	padding: 0 0.6rem;
 }
 
 .inline-form {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 1rem;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	gap: 1rem;
 }
 
 .submit-button {
-    background-color: $warm-orange;
-    color: #ffffff;
-    border: none;
-    height: 3rem;
-    min-width: 7rem;
-    font-size: 1.6rem;
-    border-radius: 0.3rem;
+	background-color: $warm-orange;
+	color: #ffffff;
+	border: none;
+	height: 3rem;
+	min-width: 7rem;
+	font-size: 1.6rem;
+	border-radius: 0.3rem;
 }
