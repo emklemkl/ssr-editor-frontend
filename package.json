@@ -7,7 +7,7 @@
 		"build": "ng build",
 		"watch": "ng build --watch --configuration development",
 		"test": "ng test",
-		"build-e": "ng build --base-href '/~emkl21/editor/browser/'",
+		"build-e": "ng build --base-href '/~emkl21/editor/browser/' && cp ./.htaccess ./dist/ssr-editor-frontend",
 		"publish-e": "rsync -av --delete dist/ssr-editor-frontend/ emkl21@ssh.student.bth.se:www/editor",
 		"build-l": "ng build --base-href '/~lojn22/editor/browser/' && cp ./.htaccess ./dist/ssr-editor-frontend",
 		"publish-l": "rsync -av --delete dist/ssr-editor-frontend/ lojn22@ssh.student.bth.se:www/editor",
