@@ -9,7 +9,7 @@
 		"test": "ng test",
 		"build-e": "ng build --base-href '/~emkl21/editor/browser/'",
 		"publish-e": "rsync -av --delete dist/ssr-editor-frontend/ emkl21@ssh.student.bth.se:www/editor",
-		"build-l": "ng build --base-href '/~lojn22/editor/browser/'",
+		"build-l": "ng build --base-href '/~lojn22/editor/browser/' && cp ./.htaccess ./dist/ssr-editor-frontend",
 		"publish-l": "rsync -av --delete dist/ssr-editor-frontend/ lojn22@ssh.student.bth.se:www/editor",
 		"lint": "ng lint",
 		"lint-fix": "ng lint --fix",
