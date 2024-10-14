@@ -1,6 +1,4 @@
-import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Document } from "@interfaces/document";
 import { Socket } from "ngx-socket-io";
 import { Observable } from "rxjs";
 // Define an interface for the document structure
@@ -12,11 +10,14 @@ export class SocketDocumentService {
 
 	constructor(private socket: Socket) {}
 
-	sendMessage(docUpdates: string) {
+	sendChanges(docUpdates: string) {
 		this.socket.emit("doc-update", docUpdates);
 	}
-	// getMessage() {
-	// 	return this.socket.fromEvent("message")
-	// 	.pipe(map((data: { msg: any; }) => data.msg));
-	// }
+	createRoom(_id: string) {
+		this.socket.emit("create", _id);
+	}
+	getChanges(): Observable<Document> {
+		// .pipe(map((data: { msg: any; }) => data.msg));
+		return this.socket.fromEvent<Document>("doc-update");
+	}
 }
