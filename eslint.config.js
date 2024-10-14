@@ -31,7 +31,8 @@ module.exports = tseslint.config(
 				}
 			],
 			"comma-dangle": ["error", "never"],
-			"no-unused-vars": "off"
+			"no-unused-vars": "off",
+			"@typescript-eslint/no-explicit-any": "off"
 		}
 	},
 	{
