@@ -31,7 +31,7 @@ export class DocumentDetailsComponent implements OnInit, OnChanges {
 	document$!: Observable<Document>;
 	currentDocument: Document = { _id: this.id, title: "", content: "" };
 	typingTimer!: ReturnType<typeof setTimeout>;
-	public TIMEOUT_DELAY = 500;
+	TIMEOUT_DELAY = 500;
 	constructor(
 		private documentService: DocumentService,
 		private socketDocumentService: SocketDocumentService
@@ -49,7 +49,7 @@ export class DocumentDetailsComponent implements OnInit, OnChanges {
 		this.socketDocumentService.createRoom(this.id);
 
 		// Subscribes to textarea and input and reacts to changes.
-		this.socketDocumentService.getChanges().subscribe((msg: any ) => {
+		this.socketDocumentService.getChanges().subscribe((msg: any) => {
 			this.currentDocument.title = msg.title;
 			this.currentDocument.content = msg.content;
 		});
