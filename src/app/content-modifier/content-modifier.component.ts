@@ -32,12 +32,13 @@ export class ContentModifierComponent {
 					case "bold":
 					case "underscore":
 					case "cursive":
-				}
-				html = `<span class="${type}">` + range + "</span>";
-				range.deleteContents();
-				let el = document.createElement("div");
-				el.innerHTML = html;
-				range.insertNode(el.children[0]);
+						html = `<span class="${type}">` + range + "</span>";
+						break;
+					}
+					range.deleteContents();
+					let el = document.createElement("div");
+					el.innerHTML = html;
+					range.insertNode(el.children[0]);
 			}
 		}
 	}

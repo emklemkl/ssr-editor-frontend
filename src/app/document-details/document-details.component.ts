@@ -17,7 +17,7 @@ import { Observable } from "rxjs";
 	template: `
 		<section class="text-fields" *ngIf="document$ | async as document">
 			<app-content-modifier/>
-			<!-- <input type="text" (input)="submitUpdateDoc()" [(ngModel)]="currentDocument.title" placeholder="Title" /> -->
+			<input type="text" (input)="submitUpdateDoc()" [(ngModel)]="currentDocument.title" placeholder="Title" />
 			<div
 				contenteditable="true"
 				type="text"
@@ -35,9 +35,9 @@ import { Observable } from "rxjs";
 	`,
 	styleUrl: "./document-details.component.scss"
 })
-export class DocumentDetailsComponent implements OnInit, OnChanges {
+export class DocumentDetailsComponent implements  OnChanges {
 	@Input() id = "";
-	document$!: Observable<Document>;
+	@Input() document$!: Observable<Document>;
 	newestContent: any;
 	currentDocument: Document = { _id: this.id, title: "", content: "" };
 	typingTimer!: ReturnType<typeof setTimeout>;
@@ -47,25 +47,27 @@ export class DocumentDetailsComponent implements OnInit, OnChanges {
 		private socketDocumentService: SocketDocumentService
 	) {}
 
-	ngOnInit(): void {
-		this.document$ = this.documentService.getDocument(this.id);
+	// ngOnInit(): void {
+	// 	// this.document$ = this.documentService.getDocument(this.id);
 
-		this.document$.subscribe((document) => {
-			this.currentDocument._id = this.id;
-			this.currentDocument.title = document.title;
-			this.currentDocument.content = document.content;
-		});
-		this.newestContent = this.currentDocument.content;
-		this.socketDocumentService.createRoom(this.id);
+	// 	this.document$.subscribe((document) => {
 
-		// Subscribes to textarea and input and reacts to changes.
-		this.socketDocumentService.getChanges().subscribe((msg: any) => {
-			this.currentDocument.title = msg.title;
-			this.currentDocument.content = msg.content;
-			this.newestContent = this.currentDocument.content;
-			this.updateEditableDivContent();
-		});
-	}
+	// 		this.currentDocument._id = this.id;
+	// 		this.currentDocument.title = document.title;
+	// 		this.currentDocument.content = document.content;
+	// 		console.log("ID", this.id);
+	// 	});
+	// 	this.newestContent = this.currentDocument.content;
+	// 	this.socketDocumentService.createRoom(this.id);
+
+	// 	// Subscribes to textarea and input and reacts to changes.
+	// 	this.socketDocumentService.getChanges().subscribe((msg: any) => {
+	// 		this.currentDocument.title = msg.title;
+	// 		this.currentDocument.content = msg.content;
+	// 		this.newestContent = this.currentDocument.content;
+	// 		this.updateEditableDivContent();
+	// 	});
+	// }
 	updateEditableDivContent() {
 		const editableDiv = document.querySelector(".editable-content") as HTMLElement;
 		this.newestContent = this.newestContent.replace(/&nbsp;+/g, " ").trim();
@@ -89,7 +91,7 @@ export class DocumentDetailsComponent implements OnInit, OnChanges {
 		}
 	}
 
-	submitUpdateDoc(editableDiv: HTMLElement) {
+	submitUpdateDoc() {
 		clearTimeout(this.typingTimer);
 		console.log("SubmitUpdateDoc!");
 		this.typingTimer = setTimeout(() => {
@@ -103,7 +105,7 @@ export class DocumentDetailsComponent implements OnInit, OnChanges {
 	}
 	onContentChange(editableDiv: HTMLElement) {
 		this.currentDocument.content = editableDiv.innerHTML;
-		this.submitUpdateDoc(editableDiv);
+		this.submitUpdateDoc();
 	}
 	getSelectionHtml() {
 		let sel, range;
