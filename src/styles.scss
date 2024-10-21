@@ -13,21 +13,34 @@ $purple: #9b11ed;
 $white-ish: #f0f0f0;
 
 body {
-	font-size: 16px;
-	margin: 0;
-	/* Define base font size */
+    font-size: 16px;
+    margin: 0;
+    /* Define base font size */
 }
 
 h1 {
-	font-size: 2rem;
-	/* Two times the base font size */
+    font-size: 2rem;
+    /* Two times the base font size */
 }
 
 p {
-	font-size: 1.2rem;
-	/* 1.2 times the font size of the parent element */
+    font-size: 1.2rem;
+    /* 1.2 times the font size of the parent element */
 }
 
 textarea {
-	font-size: 1.1rem;
+    font-size: 1.1rem;
+}
+
+.bold {
+    font-weight: bold;
+}
+.comment {
+	background-color: lightblue;
+}
+.underscore {
+	text-decoration: underline;
+}
+.cursive {
+	font-style: italic;
 }
