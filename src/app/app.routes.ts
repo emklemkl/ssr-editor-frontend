@@ -14,7 +14,7 @@ export const routes: Routes = [
 	{
 		path: "document/view/:id",
 		component: DocumentWorkspaceComponent,
-		title: "Document"
+		title: "Document Workspace"
 	},
 	{
 		path: "document/all",

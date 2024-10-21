@@ -16,7 +16,7 @@ import { Observable } from "rxjs";
 		</form>
 	`,
 	//   templateUrl: './document-create.component.html',
-	styleUrl: "./document-create.component.scss"
+	styleUrls: ["./document-create.component.scss"]
 })
 export class DocumentCreateComponent {
 	newDoc?: Observable<Document>;

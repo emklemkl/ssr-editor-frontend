@@ -9,7 +9,7 @@ import { Document } from "@interfaces/document";
 	imports: [DocumentDetailsComponent],
 	template: `
 		<div>
-			<app-document-details [document$]="this.document$" ]></app-document-details>
+			<app-document-details [document$]="this.document$" [id]="this.id"></app-document-details>
 			<!-- <app-document-details [id]="id" [isComment]="isComment"></app-document-details> -->
 		</div>
 	`,
