@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, EventEmitter, Output } from "@angular/core";
 
 @Component({
 	selector: "app-content-modifier",
@@ -14,8 +14,8 @@ import { Component } from "@angular/core";
 	styleUrl: "./content-modifier.component.scss"
 })
 export class ContentModifierComponent {
+	@Output() commentCreated = new EventEmitter<number>();
 	constructor() {}
-
 	spanWrapper(type: "bold" | "comment" | "cursive" | "underscore") {
 		let range: Range;
 		let selection: Selection | null = window.getSelection();
@@ -28,6 +28,7 @@ export class ContentModifierComponent {
 					case COMMENT:
 						let allComments: any = document.getElementsByClassName(COMMENT);
 						html = `<span class="${type} ${allComments.length + 1}">` + range + "</span>";
+						this.commentCreated.emit(allComments.length + 1);
 						break;
 					case "bold":
 					case "underscore":
@@ -40,6 +41,7 @@ export class ContentModifierComponent {
 					el.innerHTML = html;
 					range.insertNode(el.children[0]);
 			}
+
 		}
 	}
 }

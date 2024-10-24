@@ -13,6 +13,9 @@ export class SocketDocumentService {
 	sendChanges(docUpdates: string) {
 		this.socket.emit("doc-update", docUpdates);
 	}
+	sendChangesComment(docUpdates: string) {
+		this.socket.emit("comment-update", docUpdates);
+	}
 	createRoom(_id: string) {
 		this.socket.emit("create", _id);
 	}

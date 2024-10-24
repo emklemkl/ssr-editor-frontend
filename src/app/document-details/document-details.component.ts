@@ -13,30 +13,43 @@ import { Observable } from "rxjs";
 	standalone: true,
 	imports: [CommonModule, ReactiveFormsModule, NgIf, FormsModule, ContentModifierComponent],
 	template: `
-		<section class="text-fields" *ngIf="document$ | async as document">
-			<app-content-modifier/>
-			<input type="text" (input)="submitUpdateDoc()" [(ngModel)]="currentDocument.title" placeholder="Title" />
-			<div
-				contenteditable="true"
-				type="text"
-				(input)="onContentChange(editableDiv)"
-				[innerHTML]="newestContent"
-				name="text-content"
-				#editableDiv
-				class="editable-content"
-			>
-				{{ newestContent }}
-			</div>
-		</section>
+		@if (richTextAllowed) {
+			<section class="text-fields" *ngIf="document$ | async as document">
+				<input
+					type="text"
+					(input)="submitUpdateDoc()"
+					[(ngModel)]="currentDocument.title"
+					placeholder="Title"
+				/>
+				<div
+					contenteditable="true"
+					type="text"
+					(input)="onContentChange(editableDiv)"
+					[innerHTML]="newestContent"
+					name="text-content"
+					#editableDiv
+					class="editable-content"
+				>
+					{{ newestContent }}
+				</div>
+			</section>
+		} @else {
+			<section class="text-fields" *ngIf="document$ | async as document">
+				<textarea (input)="submitUpdateDocComment()">Add your comment here</textarea>
+			</section>
+		}
 	`,
 	styleUrl: "./document-details.component.scss"
 })
 export class DocumentDetailsComponent implements OnInit, OnChanges {
 	@Input() id = "";
 	@Input() document$!: Observable<Document>;
+	@Input() richTextAllowed: boolean = true;
+	@Input() commentAdded?: number;
 	newestContent: any;
-	currentDocument: Document = { _id: this.id, title: "", content: "" };
+	currentDocument: Document = { _id: this.id, title: "", content: "", comments: {} };
 	typingTimer!: ReturnType<typeof setTimeout>;
+	typingTimerComment!: ReturnType<typeof setTimeout>;
 	TIMEOUT_DELAY = 500;
 	constructor(
 		private documentService: DocumentService,
@@ -44,9 +57,7 @@ export class DocumentDetailsComponent implements OnInit, OnChanges {
 	) {}
 
 	ngOnInit(): void {
-
 		this.document$.subscribe((document) => {
-
 			this.currentDocument._id = this.id;
 			this.currentDocument.title = document.title;
 			this.currentDocument.content = document.content;
@@ -82,6 +93,12 @@ export class DocumentDetailsComponent implements OnInit, OnChanges {
 				});
 				this.socketDocumentService.createRoom(this.id);
 			}
+			else if (change === "commentAdded") {
+				console.log("change", change);
+				this.currentDocument.comments = {[String(this.commentAdded)]: "Placeholder comment!"}
+				console.log("Comment_Added ngOneChanges", this.commentAdded);
+				this.submitUpdateDocComment();
+			}
 		}
 	}
 
@@ -92,6 +109,15 @@ export class DocumentDetailsComponent implements OnInit, OnChanges {
 			this.socketDocumentService.sendChanges(JSON.stringify(this.currentDocument));
 		}, this.TIMEOUT_DELAY);
 	}
+
+	submitUpdateDocComment() {
+		clearTimeout(this.typingTimerComment);
+		console.log("SubmitUpdateDocComment!");
+		this.typingTimerComment = setTimeout(() => {
+			this.socketDocumentService.sendChangesComment(JSON.stringify(this.currentDocument));
+		}, this.TIMEOUT_DELAY);
+	}
+
 	onContentChange(editableDiv: HTMLElement) {
 		this.currentDocument.content = editableDiv.innerHTML;
 		this.submitUpdateDoc();
