@@ -21,7 +21,8 @@ export class DocumentService {
 	submitCreateNewDoc(title: string, content: string): Observable<Document> {
 		const body = {
 			title: title,
-			content: content
+			content: content,
+			comments: { 1: "First comment", 2: "second comment" }
 		};
 		return this.http.post<Document>(`${this.URL}/create`, body);
 	}

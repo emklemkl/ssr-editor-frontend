@@ -35,7 +35,7 @@ import { Observable } from "rxjs";
 			</section>
 		} @else {
 			<section class="text-fields" *ngIf="document$ | async as document">
-				<textarea (input)="submitUpdateDocComment()">Add your comment here</textarea>
+				<textarea id="comment{{this.existingComment.key}}" (input)="submitUpdateDocComment()">{{this.existingComment.value}}</textarea>
 			</section>
 		}
 	`,
@@ -46,6 +46,7 @@ export class DocumentDetailsComponent implements OnInit, OnChanges {
 	@Input() document$!: Observable<Document>;
 	@Input() richTextAllowed: boolean = true;
 	@Input() commentAdded?: number;
+	@Input() existingComment?: any;
 	newestContent: any;
 	currentDocument: Document = { _id: this.id, title: "", content: "", comments: {} };
 	typingTimer!: ReturnType<typeof setTimeout>;
@@ -57,6 +58,7 @@ export class DocumentDetailsComponent implements OnInit, OnChanges {
 	) {}
 
 	ngOnInit(): void {
+		console.log("🚀 ~ DocumentDetailsComponent ~ existingComment:", this.existingComment);
 		this.document$.subscribe((document) => {
 			this.currentDocument._id = this.id;
 			this.currentDocument.title = document.title;
@@ -92,10 +94,9 @@ export class DocumentDetailsComponent implements OnInit, OnChanges {
 					this.updateEditableDivContent();
 				});
 				this.socketDocumentService.createRoom(this.id);
-			}
-			else if (change === "commentAdded") {
+			} else if (change === "commentAdded") {
 				console.log("change", change);
-				this.currentDocument.comments = {[String(this.commentAdded)]: "Placeholder comment!"}
+				this.currentDocument.comments = { [String(this.commentAdded)]: "Placeholder comment!" };
 				console.log("Comment_Added ngOneChanges", this.commentAdded);
 				this.submitUpdateDocComment();
 			}
