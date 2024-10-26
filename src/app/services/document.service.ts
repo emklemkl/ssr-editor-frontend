@@ -13,17 +13,17 @@ export class DocumentService {
 
 	constructor(private http: HttpClient) {}
 	getAllDocuments(): Observable<Document[]> {
-		return this.http.get<Document[]>(`${this.URL}/all`);
+		return this.http.get<Document[]>(`${this.URL}/all`, { withCredentials: true });
 	}
 	getDocument(id: string | null): Observable<Document> {
-		return this.http.get<Document>(`${this.URL}/${id}`);
+		return this.http.get<Document>(`${this.URL}/${id}`, { withCredentials: true });
 	}
 	submitCreateNewDoc(title: string, content: string): Observable<Document> {
 		const body = {
 			title: title,
 			content: content
 		};
-		return this.http.post<Document>(`${this.URL}/create`, body);
+		return this.http.post<Document>(`${this.URL}/create`, body, { withCredentials: true });
 	}
 	submitUpdateDoc(_id: string, title: string, content: string): Observable<Document> {
 		const body = {
