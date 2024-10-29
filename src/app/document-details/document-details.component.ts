@@ -1,6 +1,6 @@
 import { CommonModule, NgIf } from "@angular/common";
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, Renderer2, SimpleChanges } from "@angular/core";
-import { ReactiveFormsModule, FormsModule, ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
+import { ReactiveFormsModule, FormsModule } from "@angular/forms";
 import { Document } from "@interfaces/document";
 import { DocumentService } from "@services/document.service";
 import { SocketDocumentService } from "@services/socket-document.service";
@@ -39,6 +39,9 @@ import { Observable } from "rxjs";
 			</section>
 		} @else {
 			<section class="text-fields" *ngIf="document$ | async as document">
+				<button type="button" (click)="deleteComment(existingComment.key)" class="delete-comment">
+					X
+				</button>
 				<textarea
 					id="comment {{ this.existingComment.key }}"
 					(input)="submitUpdateDocCommentFromEvent($event)"
@@ -57,6 +60,7 @@ export class DocumentDetailsComponent implements OnInit, OnChanges {
 	@Input() commentAdded?: number;
 	@Input() existingComment?: any;
 	@Output() commentCreated = new EventEmitter<void>();
+	@Output() commentDeleted = new EventEmitter<string>();
 	newestContent: any;
 	currentDocument: Document = { _id: this.id, title: "", content: "", comments: this.existingComment };
 	typingTimer!: ReturnType<typeof setTimeout>;
@@ -67,6 +71,11 @@ export class DocumentDetailsComponent implements OnInit, OnChanges {
 		private socketDocumentService: SocketDocumentService,
 		private renderer: Renderer2
 	) {}
+
+	deleteComment(idToRemove: string) {
+		console.log("idToRemove", idToRemove);
+		this.commentDeleted.emit(idToRemove);
+	}
 
 	ngOnInit(): void {
 		console.log("🚀 ~ DocumentDetailsComponent ~ existingComment:", this.existingComment);
@@ -86,7 +95,7 @@ export class DocumentDetailsComponent implements OnInit, OnChanges {
 			this.updateEditableDivContent();
 		});
 	}
-	
+
 	updateEditableDivContent() {
 		const editableDiv = document.querySelector(".editable-content") as HTMLElement;
 		this.newestContent = this.newestContent.replace(/&nbsp;+/g, " ").trim();
@@ -126,8 +135,8 @@ export class DocumentDetailsComponent implements OnInit, OnChanges {
 	submitUpdateDocCommentFromEvent(event: Event) {
 		const target = event.target as HTMLTextAreaElement;
 		const commentValue = target?.value || ""; // Fallback to an empty string if null
-		const commentId= target?.id || ""; // Fallback to an empty string if null
-		this.submitUpdateDocComment({[commentId]: commentValue});
+		const commentId = target?.id || ""; // Fallback to an empty string if null
+		this.submitUpdateDocComment({ [commentId]: commentValue });
 	}
 
 	submitUpdateDocComment(comment: any) {
@@ -164,7 +173,6 @@ export class DocumentDetailsComponent implements OnInit, OnChanges {
 			if (type == COMMENT) {
 				commentId = document.getElementsByClassName(COMMENT).length + 1;
 				this.renderer.addClass(span, commentId.toString());
-
 			}
 			this.renderer.addClass(span, type);
 			span.innerHTML = range.toString();
@@ -174,7 +182,6 @@ export class DocumentDetailsComponent implements OnInit, OnChanges {
 			if (type == COMMENT) {
 				setTimeout(() => {
 					this.onCommentCreate(commentId.toString());
-
 				}, 600);
 			}
 			this.setCursorPos(span, selection);

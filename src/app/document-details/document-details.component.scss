@@ -93,3 +93,14 @@ input[type="text"] {
 button {
     font-family: "Georgia", serif;
 }
+
+.delete-comment {
+	position: fixed;
+	margin-bottom: 0.7rem;
+}
+
+textarea {
+	padding: 2rem;
+	height: auto;
+	min-height: 3rem !important;
+}
