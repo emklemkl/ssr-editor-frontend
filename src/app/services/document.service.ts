@@ -22,7 +22,8 @@ export class DocumentService {
 		const body = {
 			title: title,
 			content: content,
-			comments: { 1: "First comment", 2: "second comment" }
+			// comments: { 1: "First comment", 2: "second comment" }
+			comments: {}
 		};
 		return this.http.post<Document>(`${this.URL}/create`, body);
 	}
