@@ -10,14 +10,27 @@ export class SocketDocumentService {
 
 	constructor(private socket: Socket) {}
 
-	sendChanges(docUpdates: string) {
-		this.socket.emit("doc-update", docUpdates);
+	async sendCreateComment(docUpdates: string) {
+		await this.socket.emit("comment-create", docUpdates);
+	}
+	sendChangesComment(docUpdates: string) {
+		this.socket.emit("comment-change", docUpdates);
+	}
+	async sendDeleteComment(docUpdates: string) {
+		await this.socket.emit("comment-delete", docUpdates);
 	}
 	createRoom(_id: string) {
 		this.socket.emit("create", _id);
 	}
+	sendChanges(docUpdates: string) {
+		this.socket.emit("doc-update", docUpdates);
+	}
 	getChanges(): Observable<Document> {
 		// .pipe(map((data: { msg: any; }) => data.msg));
 		return this.socket.fromEvent<Document>("doc-update");
+	}
+	getCommentChanges(): Observable<Document> {
+		// .pipe(map((data: { msg: any; }) => data.msg));
+		return this.socket.fromEvent<Document>("comment-change");
 	}
 }

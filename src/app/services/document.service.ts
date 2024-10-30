@@ -8,8 +8,8 @@ import { Observable } from "rxjs";
 	providedIn: "root"
 })
 export class DocumentService {
-	private URL = "http://localhost:5000/document";
-	// private URL = "https://js-emlo-f6byg8hvbvhahgfp.northeurope-01.azurewebsites.net/document";
+	// private URL = "http://localhost:5000/document";
+	private URL = "https://js-emlo-f6byg8hvbvhahgfp.northeurope-01.azurewebsites.net/document";
 
 	constructor(private http: HttpClient) {}
 	getAllDocuments(): Observable<Document[]> {
@@ -21,7 +21,9 @@ export class DocumentService {
 	submitCreateNewDoc(title: string, content: string): Observable<Document> {
 		const body = {
 			title: title,
-			content: content
+			content: content,
+			// comments: { 1: "First comment", 2: "second comment" }
+			comments: {}
 		};
 		return this.http.post<Document>(`${this.URL}/create`, body);
 	}
