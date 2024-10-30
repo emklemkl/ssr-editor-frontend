@@ -1,0 +1,8 @@
+<button (click)="openShareModal()">Dela dokument</button>
+
+<div *ngIf="isShareModalOpen" class="modal">
+    <h2>Dela dokument</h2>
+    <input type="email" [(ngModel)]="inviteEmail" placeholder="Ange e-postadress">
+    <button (click)="sendInvitation()">Skicka inbjudan</button>
+    <button (click)="closeShareModal()">Avbryt</button>
+</div>

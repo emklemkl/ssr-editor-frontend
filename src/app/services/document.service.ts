@@ -34,4 +34,10 @@ export class DocumentService {
 
 		return this.http.put<Document>(`${this.URL}/update`, body);
 	}
+
+	getDocumentForEditing(
+		id: string): Observable<Document> {
+		return this.http.get<Document>(`http://localhost:5000/document/${id}/edit`, { withCredentials: true });
+	}
+	
 }

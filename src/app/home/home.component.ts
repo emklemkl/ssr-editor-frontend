@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Component, OnInit } from "@angular/core";
 import { withHttpTransferCacheOptions } from "@angular/platform-browser";
-import { RouterModule } from "@angular/router";
+import { Router, RouterModule } from "@angular/router";
 import { AuthService } from '@services/auth.service';
 
 @Component({
@@ -24,7 +24,11 @@ export class HomeComponent implements OnInit {
 	error: string = '';
 	isLoading = true;
 
-	constructor(private authService: AuthService, private http: HttpClient) {}
+	constructor(
+		private authService: AuthService, 
+		private http: HttpClient,
+		private router: Router
+	) {}
 
 	ngOnInit(): void {
 		this.http.get('http://localhost:5000/current_user', { withCredentials: true })
@@ -37,6 +41,7 @@ export class HomeComponent implements OnInit {
 			console.error('Error:', err);
 			this.error = 'Ingen användare inloggad';
 			this.isLoading = false;
+			this.router.navigate(['/login'], { queryParams: { redirect: '/' } });
 		  }
 		});
 	}

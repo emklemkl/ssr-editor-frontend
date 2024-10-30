@@ -1,3 +1,8 @@
+<app-invite-user 
+    [documentId]="currentDocument._id" 
+    (invitationSent)="onInvitationSent()">
+</app-invite-user>
+
 <section class="" *ngIf="document$ | async as document">
     <input type="text" (input)="submitUpdateDoc()" [(ngModel)]="currentDocument.title" placeholder="Title" />
     <textarea
@@ -8,13 +13,3 @@
     ></textarea>
     <button (click)="submitUpdateDoc()" class="submit-button">Update</button>
 </section>
-
-<button (click)="openShareModal()">Dela dokument</button>
-
-<div *ngIf="isShareModalOpen" class="modal">
-    <h2>Dela dokument</h2>
-    <input type="email" [(ngModel)]="inviteEmail" placeholder="Ange e-postadress">
-    <button (click)="sendInvitation()">Skicka inbjudan</button>
-    <button (click)="closeShareModal()">Avbryt</button>
-</div>
-

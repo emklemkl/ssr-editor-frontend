@@ -6,11 +6,12 @@ import { DocumentService } from "@services/document.service";
 import { SocketDocumentService } from "@services/socket-document.service";
 import { Observable } from "rxjs";
 import { HttpClient } from "@angular/common/http";
+import { InviteUserComponent } from "app/invite-user/invite-user.component";
 
 @Component({
 	selector: "app-document-details",
 	standalone: true,
-	imports: [CommonModule, ReactiveFormsModule, NgIf, FormsModule],
+	imports: [CommonModule, ReactiveFormsModule, NgIf, FormsModule, InviteUserComponent],
 	templateUrl: "./document-details.component.html",
 	// template: ``,
 	styleUrl: "./document-details.component.scss"
@@ -19,7 +20,7 @@ import { HttpClient } from "@angular/common/http";
 export class DocumentDetailsComponent implements OnInit, OnChanges {
 	@Input() id = "";
 	document$!: Observable<Document>;
-	currentDocument: Document = { _id: this.id, title: "", content: "" };
+	currentDocument: Document = { _id: this.id, title: "", content: "", ownerId: "", editors: [] };
 	typingTimer!: ReturnType<typeof setTimeout>;
 	public TIMEOUT_DELAY = 500;
 	constructor(
@@ -68,36 +69,9 @@ export class DocumentDetailsComponent implements OnInit, OnChanges {
 		}, this.TIMEOUT_DELAY);
 	}
 
-	isShareModalOpen = false;
-    inviteEmail: string = '';
-
-    openShareModal() {
-        this.isShareModalOpen = true;
-    }
-
-    closeShareModal() {
-        this.isShareModalOpen = false;
-        this.inviteEmail = '';
-    }
-
-	sendInvitation() {
-		const documentId = this.currentDocument._id;  // Använd _id från currentDocument
-	
-		if (!documentId) {
-			alert("Dokument-ID saknas.");
-			return;
-		}
-
-		const apiUrl = `http://localhost:5000/document/${documentId}/invite`;
-	
-		this.http.post(apiUrl, { email: this.inviteEmail }, { withCredentials: true })
-			.subscribe({
-				next: () => {
-					alert('Inbjudan skickad!');
-					this.closeShareModal();
-				},
-				error: () => alert('Kunde inte skicka inbjudan.')
-			});
+	onInvitationSent() {
+		console.log("En inbjudan har skickats.");
+		// Eventuellt uppdatera UI eller hantera något annat
 	}
 	
 }
