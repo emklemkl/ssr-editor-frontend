@@ -16,8 +16,8 @@ export class SocketDocumentService {
 	sendChangesComment(docUpdates: string) {
 		this.socket.emit("comment-change", docUpdates);
 	}
-	sendDeleteComment(docUpdates: string) {
-		this.socket.emit("comment-delete", docUpdates);
+	async sendDeleteComment(docUpdates: string) {
+		await this.socket.emit("comment-delete", docUpdates);
 	}
 	createRoom(_id: string) {
 		this.socket.emit("create", _id);
@@ -27,6 +27,7 @@ export class SocketDocumentService {
 	}
 	getChanges(): Observable<Document> {
 		// .pipe(map((data: { msg: any; }) => data.msg));
+		console.log("ASDADASDADS");
 		return this.socket.fromEvent<Document>("doc-update");
 	}
 }

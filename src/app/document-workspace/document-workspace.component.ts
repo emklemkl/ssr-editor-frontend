@@ -6,6 +6,7 @@ import { Document } from "@interfaces/document";
 import { ContentModifierComponent } from "../content-modifier/content-modifier.component";
 import { KeyValuePipe, NgFor } from "@angular/common";
 import { SocketDocumentService } from "@services/socket-document.service";
+import { firstValueFrom } from "rxjs";
 @Component({
 	selector: "app-document-workspace",
 	standalone: true,
@@ -17,12 +18,13 @@ import { SocketDocumentService } from "@services/socket-document.service";
 				[document$]="this.document$"
 				[id]="this.id"
 				(commentCreated)="onCommentCreated()"
+				(commentDeleted)="onCommentDeleted($event)"
 			></app-document-details>
 			<section class="comment-section">
 				<div #commentSection>
 					<app-document-details
-					*ngFor="let comment of existingComments | keyvalue"
-					(commentDeleted)="onCommentDeleted($event)"
+						*ngFor="let comment of existingComments | keyvalue"
+						(commentDeleted)="onCommentDeleted($event)"
 						[existingComment]="comment"
 						[document$]="this.document$"
 						[id]="this.id"
@@ -41,7 +43,10 @@ export class DocumentWorkspaceComponent {
 	commentAdded!: number;
 	@ViewChild("commentSection", { read: ViewContainerRef, static: true })
 	commentSection!: ViewContainerRef;
-	constructor(private documentService: DocumentService, private socketDocumentService: SocketDocumentService) {}
+	constructor(
+		private documentService: DocumentService,
+		private socketDocumentService: SocketDocumentService
+	) {}
 	existingComments: { [key: string]: string } = {};
 	ngOnInit() {
 		this.document$ = this.documentService.getDocument(this.id).pipe(
@@ -59,10 +64,28 @@ export class DocumentWorkspaceComponent {
 		this.fetchComments(); // Re-fetch comments from the database
 	}
 
-	onCommentDeleted(commentIdToRemove: string | number) {
-		this.socketDocumentService.sendDeleteComment(JSON.stringify({ _id: this.id, comments: commentIdToRemove }));
+	async onCommentDeleted($event: any) {
+		await this.socketDocumentService.sendDeleteComment(JSON.stringify({ _id: this.id, comments: $event }));
+		const documentData = await this.documentService.getDocument(this.id);
+		const result = await firstValueFrom(documentData);
+		let div: any  = document.createElement("div");
+		div.innerHTML = result.content
+		let spanToRemove: Element | null = div.querySelector(`#spanId${$event}`);
+		console.log("🚀 ~ DocumentWorkspaceComponent ~ onCommentDeleted ~ result.content:", result.content)
+		if (spanToRemove) {
+			spanToRemove.replaceWith(spanToRemove.textContent || "");
+			result.content = div.innerHTML
+		}
+		console.log("🚀 ~ DocumentWorkspaceComponent ~ onCommentDeleted ~ result.content:", result.content)
+		this.document$ = new Observable((observer) => {
+			observer.next(result);
+			observer.complete();
+		});
+		this.document$.subscribe((document) => {
+			console.log(">>>>>", document);
+		});
+		// console.log("🚀 ~ DocumentWorkspaceComponent ~ onCommentDeleted ~ this.document$:", this.document$);
 		this.fetchComments();
-		console.log("DOC WORKSPACE:", commentIdToRemove);
 	}
 
 	extractComments(document: any) {
