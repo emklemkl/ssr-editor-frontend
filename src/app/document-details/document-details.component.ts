@@ -14,17 +14,20 @@ import { Observable } from "rxjs";
 	imports: [CommonModule, ReactiveFormsModule, NgIf, FormsModule, ContentModifierComponent],
 	template: `
 		@if (richTextAllowed) {
-			<button type="button" (click)="spanWrapper('bold')" class="bold">B</button>
-			<button type="button" (click)="spanWrapper('cursive')" class="cursive">k</button>
-			<button type="button" (click)="spanWrapper('underscore')" class="underscore">U</button>
-			<button type="button" (click)="spanWrapper('comment')">Comment</button>
 			<section class="text-fields" *ngIf="document$ | async as document">
 				<input
-					type="text"
-					(input)="submitUpdateDoc()"
-					[(ngModel)]="currentDocument.title"
-					placeholder="Title"
+				type="text"
+				(input)="submitUpdateDoc()"
+				[(ngModel)]="currentDocument.title"
+				placeholder="Title"
 				/>
+				<div>
+
+					<button type="button" (click)="spanWrapper('bold')" class="button-mod bold">B</button>
+					<button type="button" (click)="spanWrapper('cursive')" class="button-mod cursive">k</button>
+					<button type="button" (click)="spanWrapper('underscore')" class="button-mod underscore">U</button>
+					<button type="button" (click)="spanWrapper('comment')" class="button-mod">Comment</button>
+				</div>
 				<div
 					contenteditable="true"
 					type="text"
@@ -42,7 +45,7 @@ import { Observable } from "rxjs";
 				<button type="button" (click)="onCommentDelete(existingComment.key)" class="delete-comment">X</button>
 				<textarea
 					id="{{ this.existingComment.key }}"
-					class="comment"
+					class="comment commentBox{{ this.existingComment.key }}"
 					(input)="submitUpdateDocCommentFromEvent($event)"
 					#comment
 					>{{ this.existingComment.value }}</textarea
@@ -72,7 +75,7 @@ export class DocumentDetailsComponent implements OnInit, OnChanges {
 		private renderer: Renderer2,
 		private elRef: ElementRef,
 		private cdr: ChangeDetectorRef
-	) { }
+	) {}
 
 	onCommentDelete(commentId: string) {
 		this.commentDeleted.emit(commentId);
@@ -127,7 +130,6 @@ export class DocumentDetailsComponent implements OnInit, OnChanges {
 	// }
 
 	ngOnInit(): void {
-
 		this.document$.subscribe((document) => {
 			this.currentDocument._id = this.id;
 			this.currentDocument.title = document.title;
@@ -141,6 +143,22 @@ export class DocumentDetailsComponent implements OnInit, OnChanges {
 			this.currentDocument.title = msg.title;
 			this.currentDocument.content = msg.content;
 			this.newestContent = this.currentDocument.content;
+			this.updateEditableDivContent();
+		});
+		this.socketDocumentService.getCommentChanges().subscribe((msg: any) => {
+			console.log("msg", msg);
+			console.log("this.existingComment", this.existingComment);
+			console.log(
+				"🚀 ~ DocumentDetailsComponent ~ this.socketDocumentService.getCommentChanges ~ this.existingComment.key:",
+				this.existingComment.key
+			);
+			const commentKey = this.existingComment.key;
+			const comments = msg.comments; // assuming `msg` is the object shown in your console log
+
+			if (comments && comments[commentKey]) {
+				this.existingComment.value = comments[commentKey];
+			}
+			// this.existingComment
 			this.updateEditableDivContent();
 		});
 	}
@@ -169,6 +187,12 @@ export class DocumentDetailsComponent implements OnInit, OnChanges {
 				// this.submitUpdateDoc();
 				// this.submitUpdateDocComment();
 			}
+		}
+		if (simpleChanges["document$"]) {
+			this.document$.subscribe((doc) => {
+				this.newestContent = doc.content || "";
+				this.cdr.detectChanges();
+			});
 		}
 	}
 
@@ -206,7 +230,7 @@ export class DocumentDetailsComponent implements OnInit, OnChanges {
 	async onCommentCreate(id: string) {
 		const payload = {
 			_id: this.id,
-			comments: { [id]: `Preset comment ${id}` }
+			comments: { [id]: `Write your comment..` }
 		};
 		await this.socketDocumentService.sendCreateComment(JSON.stringify(payload));
 		this.commentCreated.emit();

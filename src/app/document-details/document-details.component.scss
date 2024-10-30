@@ -95,12 +95,35 @@ button {
 }
 
 .delete-comment {
-	position: fixed;
-	margin-bottom: 0.7rem;
+    position: absolute;
+    margin-bottom: 0.7rem;
 }
 
 textarea {
-	padding: 2rem;
-	height: auto;
-	min-height: 3rem !important;
+    padding: 2rem;
+    height: auto;
+    min-height: 3rem !important;
+}
+
+.editable-content {
+    border-radius: 0.5rem;
+    padding: 2rem;
+    max-height: 50rem;
+    border: solid black 1px;
+    min-height: 20rem;
+}
+
+.button-mod {
+    background-color: $warm-orange;
+    color: #ffffff;
+    border: none;
+    height: 2rem;
+    min-width: 3rem;
+    font-size: 1.6rem;
+    border-radius: 0.3rem;
+    margin: 0 0.7rem;
+}
+
+.text-fields {
+	margin-bottom: 0.7rem;
 }

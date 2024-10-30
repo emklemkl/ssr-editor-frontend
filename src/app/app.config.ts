@@ -3,10 +3,10 @@ import { ApplicationConfig, importProvidersFrom, provideZoneChangeDetection } fr
 import { provideRouter, withComponentInputBinding } from "@angular/router";
 import { SocketIoConfig, SocketIoModule } from "ngx-socket-io";
 import { routes } from "./app.routes";
-const config: SocketIoConfig = {
-	url: "http://localhost:5000"
-};
-// const config: SocketIoConfig = { url: "https://js-emlo-f6byg8hvbvhahgfp.northeurope-01.azurewebsites.net/", options: {} };
+// const config: SocketIoConfig = {
+// 	url: "http://localhost:5000"
+// };
+const config: SocketIoConfig = { url: "https://js-emlo-f6byg8hvbvhahgfp.northeurope-01.azurewebsites.net/", options: {} };
 
 export const appConfig: ApplicationConfig = {
 	providers: [

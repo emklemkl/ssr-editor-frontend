@@ -12,6 +12,17 @@ $purple: #9b11ed;
 // $deep-brown:oklch(51.01% 0.274 263.83);
 $white-ish: #f0f0f0;
 
+$bright-orange: #ff9900;
+$bright-yellow: #ffff66;
+$mint-green: #66ff99;
+$light-pink: #ff66b2;
+$sky-blue: #66ccff;
+$bright-turquoise: #00e6e6;
+$lime-green: #b3ff66;
+$peach: #ffcc99;
+$light-purple: #d9b3ff;
+$soft-teal: #99e6e6;
+
 body {
     font-size: 16px;
     margin: 0;
@@ -35,12 +46,63 @@ textarea {
 .bold {
     font-weight: bold;
 }
-.comment {
-	background-color: lightblue;
-}
+
+// .comment {
+//     background-color: lightblue;
+// }
+
 .underscore {
-	text-decoration: underline;
+    text-decoration: underline;
 }
+
 .cursive {
-	font-style: italic;
+    font-style: italic;
+}
+
+.commentBox1, #spanId1 {
+  background-color: $bright-orange;
+}
+
+.commentBox2, #spanId2 {
+  background-color: $bright-yellow;
+}
+
+.commentBox3, #spanId3 {
+  background-color: $mint-green;
+}
+
+.commentBox4, #spanId4 {
+  background-color: $light-pink;
+}
+
+.commentBox5, #spanId5 {
+  background-color: $sky-blue;
+}
+
+.commentBox6, #spanId6 {
+  background-color: $bright-turquoise;
+}
+
+.commentBox7, #spanId7 {
+  background-color: $lime-green;
+}
+
+.commentBox8, #spanId8 {
+  background-color: $peach;
+}
+
+.commentBox9, #spanId9 {
+  background-color: $light-purple;
+}
+
+.commentBox10, #spanId10 {
+  background-color: $soft-teal;
+}
+
+.commentBox11, #spanId11 {
+  background-color: $light-tan;
+}
+
+.commentBox12, #spanId12 {
+  background-color: $tan;
 }

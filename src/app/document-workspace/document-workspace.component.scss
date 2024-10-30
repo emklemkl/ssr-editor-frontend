@@ -1,4 +1,7 @@
 .workspace {
     display: grid;
-    grid-template-columns: 60% 20%;
+    grid-template-columns: 80% 15%;
+    gap: 3rem;
+    padding: 1.5rem 10rem;
+    justify-content: end;
 }

@@ -27,7 +27,10 @@ export class SocketDocumentService {
 	}
 	getChanges(): Observable<Document> {
 		// .pipe(map((data: { msg: any; }) => data.msg));
-		console.log("ASDADASDADS");
 		return this.socket.fromEvent<Document>("doc-update");
+	}
+	getCommentChanges(): Observable<Document> {
+		// .pipe(map((data: { msg: any; }) => data.msg));
+		return this.socket.fromEvent<Document>("comment-change");
 	}
 }
