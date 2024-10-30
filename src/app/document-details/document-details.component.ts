@@ -1,5 +1,5 @@
 import { CommonModule, NgIf } from "@angular/common";
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, Renderer2, SimpleChanges } from "@angular/core";
+import { Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, Renderer2, SimpleChanges } from "@angular/core";
 import { ReactiveFormsModule, FormsModule } from "@angular/forms";
 import { Document } from "@interfaces/document";
 import { DocumentService } from "@services/document.service";
@@ -43,7 +43,8 @@ import { Observable } from "rxjs";
 					X
 				</button>
 				<textarea
-					id="comment {{ this.existingComment.key }}"
+					id="{{ this.existingComment.key }}"
+					class="comment"
 					(input)="submitUpdateDocCommentFromEvent($event)"
 					#comment
 					>{{ this.existingComment.value }}</textarea
@@ -69,12 +70,35 @@ export class DocumentDetailsComponent implements OnInit, OnChanges {
 	constructor(
 		private documentService: DocumentService,
 		private socketDocumentService: SocketDocumentService,
-		private renderer: Renderer2
+		private renderer: Renderer2,
+		private elRef: ElementRef
 	) {}
 
 	deleteComment(idToRemove: string) {
 		console.log("idToRemove", idToRemove);
-		this.commentDeleted.emit(idToRemove);
+		const querySel = `#spanId${idToRemove}`;
+		// let span = this.elRef.nativeElement.querySelector(querySel);
+		// const containerDiv = this.elRef.nativeElement.querySelector(".editable-content");
+		const container = document.createElement("div");
+		container.innerHTML = this.newestContent;
+		console.log("🚀 ~ DocumentDetailsComponent ~ deleteComment ~ container.innerHTML :", container.innerHTML )
+		// Select the specific span by ID
+		let spanToRemove: Element | null = container.querySelector(`#spanId${idToRemove}`);
+		if (spanToRemove) {
+			console.log("🚀 ~ DocumentDetailsComponent ~ deleteComment ~ spanToRemove:", spanToRemove)
+			console.log("🚀 ~ DocumentDetailsComponent ~ deleteComment ~ spanToRemove.textContent:", spanToRemove.textContent)
+			spanToRemove.replaceWith(spanToRemove.textContent || "");
+			console.log("🚀 ~ DocumentDetailsComponent ~ deleteComment ~ container.innerHTML", container.innerHTML);
+			this.currentDocument.content = container.innerHTML;
+			this.newestContent = container.innerHTML;
+			console.log("🚀 ~ DocumentDetailsComponent ~ deleteComment ~ this.newestContent:", this.newestContent)
+			this.updateEditableDivContent()
+			this.submitUpdateDoc();
+			this.commentDeleted.emit(idToRemove);
+		}
+		else {
+			console.error(`No span found with selector: ${querySel}`);
+		}
 	}
 
 	ngOnInit(): void {
@@ -100,7 +124,8 @@ export class DocumentDetailsComponent implements OnInit, OnChanges {
 		const editableDiv = document.querySelector(".editable-content") as HTMLElement;
 		this.newestContent = this.newestContent.replace(/&nbsp;+/g, " ").trim();
 		if (editableDiv && editableDiv.innerHTML !== this.newestContent) {
-			editableDiv.innerHTML = this.newestContent;
+			// editableDiv.innerHTML = this.newestContent;
+			editableDiv.innerHTML= this.newestContent.replace(/\u200B/g, "");
 		}
 	}
 	ngOnChanges(simpleChanges: SimpleChanges): void {
@@ -173,6 +198,7 @@ export class DocumentDetailsComponent implements OnInit, OnChanges {
 			if (type == COMMENT) {
 				commentId = document.getElementsByClassName(COMMENT).length + 1;
 				this.renderer.addClass(span, commentId.toString());
+				this.renderer.setAttribute(span, "id", `spanId${commentId}`)
 			}
 			this.renderer.addClass(span, type);
 			span.innerHTML = range.toString();

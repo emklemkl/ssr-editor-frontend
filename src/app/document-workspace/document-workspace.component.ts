@@ -72,16 +72,4 @@ export class DocumentWorkspaceComponent {
 			}
 		}
 	}
-	// onCommentAdd(commentId: number) {
-	// 	this.commentAdded = commentId;
-	// 	console.log("Comment added with ID:", this.commentAdded);
-	// 	// this.commentAdded = commentId;
-	// 	const componentRef = this.commentSection.createComponent(DocumentDetailsComponent);
-	// 	componentRef.setInput("existingComment", { key: commentId, value: this.existingComments[commentId] });
-	// 	componentRef.setInput("document$", this.document$);
-	// 	componentRef.setInput("id", this.id);
-	// 	componentRef.setInput("richTextAllowed", false);
-	// 	componentRef.setInput("commentAdded", this.commentAdded);
-	// 	console.log("Comment added with ID:", this.commentAdded);
-	// }
 }
