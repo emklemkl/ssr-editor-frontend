@@ -13,10 +13,10 @@ export class DocumentService {
 
 	constructor(private http: HttpClient) {}
 	getAllDocuments(): Observable<Document[]> {
-		return this.http.get<Document[]>(`${this.URL}/all`);
+		return this.http.get<Document[]>(`${this.URL}/all`, { withCredentials: true });
 	}
 	getDocument(id: string | null): Observable<Document> {
-		return this.http.get<Document>(`${this.URL}/${id}`);
+		return this.http.get<Document>(`${this.URL}/${id}`, { withCredentials: true });
 	}
 	submitCreateNewDoc(title: string, content: string): Observable<Document> {
 		const body = {
@@ -25,7 +25,7 @@ export class DocumentService {
 			// comments: { 1: "First comment", 2: "second comment" }
 			comments: {}
 		};
-		return this.http.post<Document>(`${this.URL}/create`, body);
+		return this.http.post<Document>(`${this.URL}/create`, body, { withCredentials: true });
 	}
 	submitUpdateDoc(_id: string, title: string, content: string): Observable<Document> {
 		const body = {
@@ -36,4 +36,10 @@ export class DocumentService {
 
 		return this.http.put<Document>(`${this.URL}/update`, body);
 	}
+
+	getDocumentForEditing(
+		id: string): Observable<Document> {
+		return this.http.get<Document>(`http://localhost:5000/document/${id}/edit`, { withCredentials: true });
+	}
+	
 }

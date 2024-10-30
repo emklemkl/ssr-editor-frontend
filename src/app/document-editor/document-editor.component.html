@@ -1,0 +1,7 @@
+<div *ngIf="isAuthenticated && documentId">
+    <app-document-details [id]="documentId"></app-document-details>
+  </div>
+  <div *ngIf="!isAuthenticated">
+    <p>Omdirigerar till inloggningssida...</p>
+  </div>
+  

@@ -1,1 +1,15 @@
-<p>document-details works!</p>
+<app-invite-user 
+    [documentId]="currentDocument._id" 
+    (invitationSent)="onInvitationSent()">
+</app-invite-user>
+
+<section class="" *ngIf="document$ | async as document">
+    <input type="text" (input)="submitUpdateDoc()" [(ngModel)]="currentDocument.title" placeholder="Title" />
+    <textarea
+        type="text"
+        (input)="submitUpdateDoc()"
+        [(ngModel)]="currentDocument.content"
+        name="text-content"
+    ></textarea>
+    <button (click)="submitUpdateDoc()" class="submit-button">Update</button>
+</section>

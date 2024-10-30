@@ -4,4 +4,6 @@ export interface Document {
 	content?: string;
 	comments?: any;
 	// comments?: {[key:string] : string}
+	ownerId: string;
+	editors: [];
 }

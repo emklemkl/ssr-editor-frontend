@@ -6,13 +6,20 @@ import { DocumentService } from "@services/document.service";
 import { SocketDocumentService } from "@services/socket-document.service";
 import { ContentModifierComponent } from "app/content-modifier/content-modifier.component";
 import { Observable } from "rxjs";
+import { HttpClient } from "@angular/common/http";
+import { InviteUserComponent } from "app/invite-user/invite-user.component";
 
 
 @Component({
 	selector: "app-document-details",
 	standalone: true,
-	imports: [CommonModule, ReactiveFormsModule, NgIf, FormsModule, ContentModifierComponent],
+
+	imports: [CommonModule, ReactiveFormsModule, NgIf, FormsModule, ContentModifierComponent, InviteUserComponent],
 	template: `
+		<app-invite-user
+		[documentId]="currentDocument._id"
+		(invitationSent)="onInvitationSent()">
+		</app-invite-user>
 		@if (richTextAllowed) {
 			<section class="text-fields" *ngIf="document$ | async as document">
 				<input
@@ -53,6 +60,8 @@ import { Observable } from "rxjs";
 			</section>
 		}
 	`,
+
+	// templateUrl: "./document-details.component.html",
 	styleUrl: "./document-details.component.scss"
 })
 export class DocumentDetailsComponent implements OnInit, OnChanges {
@@ -65,16 +74,21 @@ export class DocumentDetailsComponent implements OnInit, OnChanges {
 	@Output() commentDeleted = new EventEmitter<string>();
 
 	newestContent: any;
-	currentDocument: Document = { _id: this.id, title: "", content: "", comments: this.existingComment };
+	currentDocument: Document = { _id: this.id, title: "", content: "", comments: this.existingComment, ownerId: "", editors: []  };
+
+
 	typingTimer!: ReturnType<typeof setTimeout>;
 	typingTimerComment!: ReturnType<typeof setTimeout>;
 	TIMEOUT_DELAY = 500;
 	constructor(
 		private documentService: DocumentService,
 		private socketDocumentService: SocketDocumentService,
+
 		private renderer: Renderer2,
 		private elRef: ElementRef,
-		private cdr: ChangeDetectorRef
+		private cdr: ChangeDetectorRef,
+		private http: HttpClient
+
 	) {}
 
 	onCommentDelete(commentId: string) {
@@ -131,6 +145,7 @@ export class DocumentDetailsComponent implements OnInit, OnChanges {
 
 	ngOnInit(): void {
 		this.document$.subscribe((document) => {
+			console.log('Loaded document:', document);
 			this.currentDocument._id = this.id;
 			this.currentDocument.title = document.title;
 			this.currentDocument.content = document.content;
@@ -271,5 +286,9 @@ export class DocumentDetailsComponent implements OnInit, OnChanges {
 		selection.removeAllRanges();
 		selection.addRange(newRange);
 		this.onContentChange(span.parentNode as HTMLElement);
+	}
+	onInvitationSent() {
+		console.log("En inbjudan har skickats.");
+		// Eventuellt uppdatera UI eller hantera något annat
 	}
 }
