@@ -35,10 +35,11 @@ export class UserProfileComponent implements OnInit {
 
   logout(): void {
     this.authService.logout().subscribe(() => {
-      window.location.href = 'http://localhost:4200/login';
+      window.location.href = "https://www.student.bth.se/~emkl21/editor/browser/";
+    //   window.location.href = 'http://localhost:4200/login';
     }, error => {
       console.error('Loggout error:', error);
-      
+
     });
   }
 }

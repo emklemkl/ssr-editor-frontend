@@ -33,7 +33,8 @@ export class InviteUserComponent {
       return;
     }
 
-    const apiUrl = `http://localhost:5000/document/${this.documentId}/invite`;
+    const apiUrl = `https://js-emlo-f6byg8hvbvhahgfp.northeurope-01.azurewebsites.net/document/${this.documentId}/invite`;
+    // const apiUrl = `http://localhost:5000/document/${this.documentId}/invite`;
 
     this.http.post(apiUrl, { email: this.inviteEmail }, { withCredentials: true })
       .subscribe({

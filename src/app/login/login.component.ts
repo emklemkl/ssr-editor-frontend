@@ -23,6 +23,7 @@ export class LoginComponent implements OnInit {
   }
 
   loginWithGoogle() {
-    window.location.href = 'http://localhost:5000/auth/google';
+    window.location.href = 'https://js-emlo-f6byg8hvbvhahgfp.northeurope-01.azurewebsites.net/auth/google';
+    // window.location.href = 'http://localhost:5000/auth/google';
   }
 }

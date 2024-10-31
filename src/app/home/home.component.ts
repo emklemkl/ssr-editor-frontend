@@ -25,24 +25,26 @@ export class HomeComponent implements OnInit {
 	isLoading = true;
 
 	constructor(
-		private authService: AuthService, 
+		private authService: AuthService,
 		private http: HttpClient,
 		private router: Router
 	) {}
 
 	ngOnInit(): void {
-		this.http.get('http://localhost:5000/current_user', { withCredentials: true })
-		.subscribe({
-		  next: (data) => {
-			this.user = data;
-			this.isLoading = false;
-		  },
-		  error: (err) => {
-			console.error('Error:', err);
-			this.error = 'Ingen användare inloggad';
-			this.isLoading = false;
-			this.router.navigate(['/login'], { queryParams: { redirect: '/' } });
-		  }
-		});
+		this.http
+			.get("https://js-emlo-f6byg8hvbvhahgfp.northeurope-01.azurewebsites.net", { withCredentials: true })
+			// this.http.get('http://localhost:5000/current_user', { withCredentials: true })
+			.subscribe({
+				next: (data) => {
+					this.user = data;
+					this.isLoading = false;
+				},
+				error: (err) => {
+					console.error("Error:", err);
+					this.error = "Ingen användare inloggad";
+					this.isLoading = false;
+					this.router.navigate(["/login"], { queryParams: { redirect: "/" } });
+				}
+			});
 	}
   }

@@ -41,5 +41,5 @@ export class DocumentService {
 		id: string): Observable<Document> {
 		return this.http.get<Document>(`http://localhost:5000/document/${id}/edit`, { withCredentials: true });
 	}
-	
+
 }
