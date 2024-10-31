@@ -8,7 +8,7 @@ import { catchError, map } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class AuthService {
-    private API_URL = 'http://localhost:5000/auth';
+    private API_URL = 'http://localhost:5000/';
   constructor(private http: HttpClient, private router: Router) {}
 
   handleGoogleCallback() {
@@ -16,24 +16,20 @@ export class AuthService {
     console.log("!! AuthService Redirecting to:", redirectUrl); 
     // this.router.navigate([redirectUrl]);
     this.router.navigateByUrl(redirectUrl);
-  }  
-
-  // isAuthenticated(): Observable<boolean> {
-  //   return this.http.get<boolean>(`${this.API_URL}/status`, { withCredentials: true });
-  // }
+  }
 
   isAuthenticated(): Observable<boolean> {
-    return this.http.get('http://localhost:5000/current_user', { withCredentials: true }).pipe(
+    return this.http.get(`${this.API_URL}/current_user`, { withCredentials: true }).pipe(
       map(() => true),
-      catchError(() => of(false))  // Returnerar false om ingen användare är inloggad
+      catchError(() => of(false))
     );
   }
 
   getCurrentUser(): Observable<any> {
-    return this.http.get('http://localhost:5000/current_user', { withCredentials: true });
+    return this.http.get(`${this.API_URL}/current_user`, { withCredentials: true });
   }
 
   logout(): Observable<any> {
-    return this.http.get('http://localhost:5000/logout', { withCredentials: true });
+    return this.http.get(`${this.API_URL}/logout`, { withCredentials: true });
   }
 }
