@@ -5,7 +5,8 @@ import { DocumentDetailsComponent } from "./document-details/document-details.co
 import { HomeComponent } from "./home/home.component";
 import { DocumentWorkspaceComponent } from "./document-workspace/document-workspace.component";
 import { LoginComponent } from "./login/login.component";
-import { DocumentEditorComponent } from "./document-editor/document-editor.component";
+import { RegisterComponent } from "./register/register.component";
+// import { DocumentEditorComponent } from "./document-editor/document-editor.component";
 
 
 export const routes: Routes = [
@@ -20,6 +21,11 @@ export const routes: Routes = [
 		title: "Login"
 	},
 	{
+		path: "register",
+		component: RegisterComponent,
+		title: "Register"
+	},
+	{
 		path: "document/view/:id",
 		component: DocumentWorkspaceComponent,
 		title: "Document Workspace"
@@ -29,9 +35,9 @@ export const routes: Routes = [
 		component: DocumentComponent,
 		title: "All documents"
 	},
-	{
-		path: 'document/:id/edit',
-		component: DocumentEditorComponent,
-		title: 'Edit'
-	}
+	// {
+	// 	path: 'document/:id/edit',
+	// 	component: DocumentEditorComponent,
+	// 	title: 'Edit'
+	// }
 ];

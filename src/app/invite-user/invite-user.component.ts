@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-invite-user',
@@ -33,8 +34,9 @@ export class InviteUserComponent {
       return;
     }
 
-    const apiUrl = `https://js-emlo-f6byg8hvbvhahgfp.northeurope-01.azurewebsites.net/document/${this.documentId}/invite`;
-    // const apiUrl = `http://localhost:5000/document/${this.documentId}/invite`;
+    // const apiUrl = `https://js-emlo-f6byg8hvbvhahgfp.northeurope-01.azurewebsites.net/document/${this.documentId}/invite`;
+    // const apiUrl = `${this.URL}/${this.documentId}/invite`;
+    const apiUrl = `http://localhost:5000/document/${this.documentId}/invite`;
 
     this.http.post(apiUrl, { email: this.inviteEmail }, { withCredentials: true })
       .subscribe({

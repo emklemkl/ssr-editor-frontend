@@ -1,6 +1,6 @@
-<div class="login-container">
-    <h2>Logga in</h2>
-    <form (ngSubmit)="onLogin()">
+<div class="register-container">
+    <h2>Registrera dig</h2>
+    <form (ngSubmit)="onRegister()">
       <div class="form-group">
         <label for="email">E-post:</label>
         <input
@@ -25,11 +25,16 @@
         />
       </div>
   
-      <button type="submit">Logga in</button>
+      <button type="submit">Registrera</button>
+  
+      <div *ngIf="successMessage" class="success-message">
+        {{ successMessage }}
+      </div>
   
       <div *ngIf="errorMessage" class="error-message">
         {{ errorMessage }}
       </div>
+      <button type="button" (click)="goToLogin()">Har du redan ett konto? Logga in här!</button>
     </form>
   </div>
   

@@ -1,29 +1,38 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component } from '@angular/core';
+import { AuthService } from '../services/auth.service';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [],
+  imports: [CommonModule, FormsModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
 
-// export class LoginComponent {
-export class LoginComponent implements OnInit {
-  constructor(private router: Router, private route: ActivatedRoute) {}
+export class LoginComponent {
+  email: string = '';
+  password: string = '';
+  errorMessage: string | null = null;
 
-  ngOnInit() {
-    this.route.queryParams.subscribe(params => {
-        const redirectUrl = params['redirect'];
-        if (redirectUrl) {
-            localStorage.setItem('redirectUrl', redirectUrl);
-        }
+  constructor(
+    private authService: AuthService,
+    private router: Router
+  ) {}
+
+  onLogin() {
+    this.authService.login(this.email, this.password).subscribe({
+      next: (response) => {
+        console.log('Inloggning lyckades:', response);
+        // Navigera till home page efter lyckad inloggning
+        this.router.navigate(['/']);
+      },
+      error: (error) => {
+        console.error('Inloggning misslyckades:', error);
+        this.errorMessage = error.error.message || 'Något gick fel';
+      }
     });
-  }
-
-  loginWithGoogle() {
-    window.location.href = 'https://js-emlo-f6byg8hvbvhahgfp.northeurope-01.azurewebsites.net/auth/google';
-    // window.location.href = 'http://localhost:5000/auth/google';
   }
 }

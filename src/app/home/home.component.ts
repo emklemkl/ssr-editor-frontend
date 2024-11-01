@@ -1,15 +1,21 @@
-import { HttpClient } from "@angular/common/http";
 import { Component, OnInit } from "@angular/core";
-import { withHttpTransferCacheOptions } from "@angular/platform-browser";
 import { Router, RouterModule } from "@angular/router";
 import { AuthService } from '@services/auth.service';
+import { CommonModule } from "@angular/common";
 
 @Component({
 	selector: "app-home",
 	standalone: true,
-	imports: [RouterModule],
+	imports: [CommonModule, RouterModule],
 	// templateUrl: './home.component.html',
 	template: `
+		<div class="home-container">
+			<div *ngIf="user">
+				<p>Inloggad som: {{ user.email }}</p>
+				<button (click)="logout()">Logga ut</button>
+			</div>
+			</div>
+
 		<h1>Welcome to Emlo docs</h1>
 		<p>Get an overview of your documents</p>
 		<div class="container">
@@ -21,30 +27,25 @@ import { AuthService } from '@services/auth.service';
 })
 export class HomeComponent implements OnInit {
 	user: any;
-	error: string = '';
-	isLoading = true;
 
 	constructor(
 		private authService: AuthService,
-		private http: HttpClient,
 		private router: Router
 	) {}
 
 	ngOnInit(): void {
-		this.http
-			.get("https://js-emlo-f6byg8hvbvhahgfp.northeurope-01.azurewebsites.net", { withCredentials: true })
-			// this.http.get('http://localhost:5000/current_user', { withCredentials: true })
-			.subscribe({
-				next: (data) => {
-					this.user = data;
-					this.isLoading = false;
-				},
-				error: (err) => {
-					console.error("Error:", err);
-					this.error = "Ingen användare inloggad";
-					this.isLoading = false;
-					this.router.navigate(["/login"], { queryParams: { redirect: "/" } });
-				}
-			});
+		this.authService.getCurrentUser().subscribe({
+			next: (user) => {
+			  this.user = user;
+			},
+			error: () => {
+			  console.error("Användaren är inte inloggad");
+			}
+		  });
+		}
+	
+	// Logga ut användaren och navigera tillbaka till login-sidan
+	logout(): void {
+		this.authService.logout();
 	}
-  }
+}
