@@ -53,9 +53,6 @@ export class DocumentWorkspaceComponent {
 	ngOnInit() {
 		this.loadDocument();
 
-		// this.document$.subscribe((document) => {
-		// 	this.extractComments(document);
-		// });
 	}
 
 	async loadDocument() {
