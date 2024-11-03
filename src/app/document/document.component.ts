@@ -33,9 +33,20 @@ export class DocumentComponent implements OnInit {
 	ngOnInit(): void {
 		this.getAllDocuments();
 	}
-	getAllDocuments() {
-		this.documentService.getAllDocuments().subscribe((doc) => {
-			this.documents = doc;
-		});
-	}
+	// getAllDocuments() {
+	// 	this.documentService.getAllDocuments().subscribe((doc) => {
+	// 		this.documents = doc;
+	// 	});
+	// }
+	getAllDocuments(): void {
+		this.documentService.getAllDocuments().subscribe(
+		  (response: Document[]) => {
+			console.log("Documents fetched:", response);
+			this.documents = response; // Spara dokumenten i komponentens variabel
+		  },
+		  error => {
+			console.error("Error fetching documents:", error);
+		  }
+		);
+	  }
 }

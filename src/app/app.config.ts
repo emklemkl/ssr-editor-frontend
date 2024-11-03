@@ -3,9 +3,9 @@ import { ApplicationConfig, importProvidersFrom, provideZoneChangeDetection } fr
 import { provideRouter, withComponentInputBinding } from "@angular/router";
 import { SocketIoConfig, SocketIoModule } from "ngx-socket-io";
 import { routes } from "./app.routes";
-const config: SocketIoConfig = {
-	url: "http://localhost:5000"
-};
+import { environment } from "environments/environment";
+
+const config: SocketIoConfig = { url: environment.BASE_URL };
 // const config: SocketIoConfig = { url: "https://js-emlo-f6byg8hvbvhahgfp.northeurope-01.azurewebsites.net/", options: {} };
 
 export const appConfig: ApplicationConfig = {

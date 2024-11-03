@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Socket.io Client</title>
+    <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
+</head>
+<body>
+    <h1>WebSocket Client</h1>
+    <script>
+        const socket = io("http://localhost:1337");
+
+        // Skicka data till servern
+        socket.emit("content", { message: "Hello from browser!" });
+
+        // Lyssna efter meddelanden från servern
+        socket.on("content", (data) => {
+            console.log("Received from server:", data);
+        });
+    </script>
+</body>
+</html>
