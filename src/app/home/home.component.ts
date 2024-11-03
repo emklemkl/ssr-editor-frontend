@@ -7,14 +7,12 @@ import { CommonModule } from "@angular/common";
 	selector: "app-home",
 	standalone: true,
 	imports: [CommonModule, RouterModule],
-	// templateUrl: './home.component.html',
 	template: `
 		<div class="home-container">
 			<div *ngIf="user">
 				<p>Inloggad som: {{ user.email }}</p>
-				<button (click)="logout()">Logga ut</button>
 			</div>
-			</div>
+		</div>
 
 		<h1>Welcome to Emlo docs</h1>
 		<p>Get an overview of your documents</p>
@@ -23,7 +21,7 @@ import { CommonModule } from "@angular/common";
 		</div>
 	`,
 
-	styleUrl: "./home.component.scss"
+	styleUrls: ["./home.component.scss"]
 })
 export class HomeComponent implements OnInit {
 	user: any;
@@ -34,18 +32,22 @@ export class HomeComponent implements OnInit {
 	) {}
 
 	ngOnInit(): void {
-		this.authService.getCurrentUser().subscribe({
-			next: (user) => {
-			  this.user = user;
-			},
-			error: () => {
-			  console.error("Användaren är inte inloggad");
-			}
-		  });
+		this.loadUser();
+	}
+
+	private loadUser(): void {
+		if (this.authService.isAuthenticated()) {
+			// Hämta användardetaljer från backend
+			this.authService.getUserDetails().subscribe({
+				next: (user) => {
+					this.user = user;
+				},
+				error: () => {
+					console.error("Användaren är inte inloggad");
+				}
+			});
+		} else {
+			console.log("Användaren är inte inloggad");
 		}
-	
-	// Logga ut användaren och navigera tillbaka till login-sidan
-	logout(): void {
-		this.authService.logout();
 	}
 }

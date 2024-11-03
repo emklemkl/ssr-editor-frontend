@@ -9,9 +9,8 @@ import { Router } from '@angular/router';
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.scss'
+  styleUrls: ['./login.component.scss']
 })
-
 export class LoginComponent {
   email: string = '';
   password: string = '';
@@ -25,14 +24,27 @@ export class LoginComponent {
   onLogin() {
     this.authService.login(this.email, this.password).subscribe({
       next: (response) => {
-        console.log('Inloggning lyckades:', response);
-        // Navigera till home page efter lyckad inloggning
-        this.router.navigate(['/']);
+        // Förväntar att response innehåller en JWT-token
+        const token = response.token;
+        if (token) {
+          // Spara JWT i localStorage eller sessionStorage
+          localStorage.setItem('jwtToken', token);
+          console.log('Token sparad:', token);
+          console.log('Inloggning lyckades:', response);
+          // Navigera till startsidan efter lyckad inloggning
+          // this.router.navigate(['/']);
+          window.location.href = response.redirectUrl;
+        } else {
+          this.errorMessage = 'Inloggningen misslyckades. Token saknas.';
+        }
       },
       error: (error) => {
         console.error('Inloggning misslyckades:', error);
         this.errorMessage = error.error.message || 'Något gick fel';
       }
     });
+  }
+  goToRegister() {
+    this.router.navigate(['/register']);
   }
 }

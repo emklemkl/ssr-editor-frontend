@@ -26,6 +26,9 @@
       </div>
   
       <button type="submit">Logga in</button>
+
+      <p>Har du inget konto? Klicka nedan för att registrera dig.</p>
+      <button type="button" (click)="goToRegister()">Registrera konto</button>
   
       <div *ngIf="errorMessage" class="error-message">
         {{ errorMessage }}

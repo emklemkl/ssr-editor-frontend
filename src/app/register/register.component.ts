@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './register.component.html',
-  styleUrl: './register.component.scss'
+  styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent {
   email: string = '';
@@ -25,10 +25,16 @@ export class RegisterComponent {
         console.log('Registrering lyckades:', response);
         this.successMessage = 'Registreringen lyckades! Du kan nu logga in.';
         this.errorMessage = null;
-        // Efter registrering kan du navigera till inloggningssidan
+        
+        // Om JWT hanteras genom att spara det i local storage eller session storage
+        if (response.token) {
+          localStorage.setItem('token', response.token); // Spara token i local storage
+        }
+
+        // Navigera till inloggningssidan efter 2 sekunder
         setTimeout(() => {
           this.router.navigate(['/login']);
-        }, 2000); // Navigera efter 2 sekunder
+        }, 2000);
       },
       error: (error) => {
         console.error('Registrering misslyckades:', error);
@@ -37,7 +43,8 @@ export class RegisterComponent {
       }
     });
   }
+
   goToLogin() {
     this.router.navigate(['/login']);
-}
+  }
 }
