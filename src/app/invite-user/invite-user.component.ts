@@ -8,7 +8,7 @@ import { FormsModule } from '@angular/forms';
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './invite-user.component.html',
-  styleUrls: ['./invite-user.component.scss'] // rätta till till `styleUrls`
+  styleUrls: ['./invite-user.component.scss']
 })
 export class InviteUserComponent {
   @Input() documentId: string = '';
@@ -16,7 +16,7 @@ export class InviteUserComponent {
   inviteEmail: string = '';
   isShareModalOpen = false;
 
-  constructor(private authService: AuthService) {} // Ta bort HttpClient
+  constructor(private authService: AuthService) {}
 
   openShareModal() {
     this.isShareModalOpen = true;
@@ -36,9 +36,15 @@ export class InviteUserComponent {
     this.authService.sendInvitation(this.documentId, this.inviteEmail).subscribe({
       next: (response) => {
         console.log('Inbjudan skickad:', response);
+        alert('Inbjudan skickad till användaren!');
       },
       error: (error) => {
         console.error('Fel vid försök att skicka inbjudan:', error);
+        alert('Ett fel inträffade vid skickandet av inbjudan. Försök igen.');
+      },
+
+      complete: () => {
+        console.log('Förfrågan avslutad');
       }
     });
   }

@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { environment } from 'environments/environment';
 import { Router } from '@angular/router';
 import { throwError } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 @Injectable({
 	providedIn: "root"
@@ -21,8 +22,16 @@ export class AuthService {
 		return this.http.post(`${this.baseUrl}/auth/register`, { email, password });
   }
 
-  login(email: string, password: string): Observable<any> {
-		return this.http.post<any>(`${this.baseUrl}/auth/login`, { email, password });
+login(email: string, password: string): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}/auth/login`, { email, password }).pipe(
+      tap(response => {
+        // Kontrollera om svaret innehåller en token
+        if (response.token) {
+          // Spara token i localStorage
+          localStorage.setItem(this.tokenKey, response.token);
+        }
+      })
+    );
   }
 
   setToken(token: string): void {
@@ -42,8 +51,8 @@ export class AuthService {
   }
 
   sendInvitation(documentId: string, email: string): Observable<any> {
-	const apiUrl = `${this.baseUrl}/document/${documentId}/invite`; // Byt ut URL:n till `this.URL` om det är bas-URL:en du använder
-	const token = localStorage.getItem('jwtToken'); // Hämta token från localStorage
+	const apiUrl = `${this.baseUrl}/document/${documentId}/invite`;
+	const token = localStorage.getItem('jwtToken');
 
 	if (!token) {
 		console.error('Ingen JWT-token hittades i localStorage');
@@ -60,7 +69,8 @@ export class AuthService {
 
   getUserDetails(): Observable<any> {
     const token = this.getToken();
-    return this.http.get(`${this.baseUrl}/me`, {
+
+    return this.http.get(`${this.baseUrl}/auth/me`, {
         headers: {
             Authorization: `Bearer ${token}`
         }
@@ -68,9 +78,7 @@ export class AuthService {
   }
 
   logout() {
-    // Ta bort JWT-token från localStorage eller sessionStorage
     localStorage.removeItem('jwtToken');
-    // Navigera till login-sidan eller annan sida efter utloggning
     this.router.navigate(['/login']);
   }
 }

@@ -35,19 +35,25 @@ export class HomeComponent implements OnInit {
 		this.loadUser();
 	}
 
-	private loadUser(): void {
-		if (this.authService.isAuthenticated()) {
+	private loadUser(): void {	
+		if (this.authService.isAuthenticated()) {			
+			this.authService.getToken(); // Hämtar token
+	
 			// Hämta användardetaljer från backend
 			this.authService.getUserDetails().subscribe({
 				next: (user) => {
 					this.user = user;
 				},
-				error: () => {
-					console.error("Användaren är inte inloggad");
+				error: (error) => {
+					console.error("Fel vid hämtning av användardetaljer:", error);
+				},
+				complete: () => {
+					console.log("Förfrågan om användardetaljer är avslutad.");
 				}
 			});
 		} else {
-			console.log("Användaren är inte inloggad");
+			console.log("Användaren är INTE inloggad.");
 		}
 	}
+	
 }

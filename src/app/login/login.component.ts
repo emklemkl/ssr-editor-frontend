@@ -28,9 +28,7 @@ export class LoginComponent {
         const token = response.token;
         if (token) {
           // Spara JWT i localStorage eller sessionStorage
-          localStorage.setItem('jwtToken', token);
-          console.log('Token sparad:', token);
-          console.log('Inloggning lyckades:', response);
+          localStorage.setItem('jwtToken', token);          
           // Navigera till startsidan efter lyckad inloggning
           // this.router.navigate(['/']);
           window.location.href = response.redirectUrl;

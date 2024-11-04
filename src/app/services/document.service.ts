@@ -25,16 +25,16 @@ export class DocumentService {
 		return this.http.get<Document[]>(`${this.URL}/document/all`, { headers, withCredentials: true });
 	  }
 	getDocument(id: string | null): Observable<Document> {
-		const token = localStorage.getItem('jwtToken'); // Hämta token från localStorage
+		const token = localStorage.getItem('jwtToken');
     	const headers = new HttpHeaders({
-      	'Authorization': `Bearer ${token}` // Skapa en Authorization-header
+      	'Authorization': `Bearer ${token}`
     });
 		return this.http.get<Document>(`${this.URL}/document/${id}`, { headers, withCredentials: true });
 	}
 	submitCreateNewDoc(title: string, content: string): Observable<Document> {
-		const token = localStorage.getItem('jwtToken'); // Hämta token från localStorage
+		const token = localStorage.getItem('jwtToken');
 		const headers = new HttpHeaders({
-		  'Authorization': `Bearer ${token}` // Skapa en Authorization-header
+		  'Authorization': `Bearer ${token}`
 		});
 		const body = {
 			title: title,
@@ -45,9 +45,9 @@ export class DocumentService {
 		return this.http.post<Document>(`${this.URL}/document/create`, body, { headers, withCredentials: true });
 	}
 	submitUpdateDoc(_id: string, title: string, content: string): Observable<Document> {
-		const token = localStorage.getItem('jwtToken'); // Hämta token från localStorage
+		const token = localStorage.getItem('jwtToken');
 		const headers = new HttpHeaders({
-		  'Authorization': `Bearer ${token}` // Skapa en Authorization-header
+		  'Authorization': `Bearer ${token}`
 		});
 		const body = {
 			_id: _id,
@@ -60,9 +60,9 @@ export class DocumentService {
 
 	getDocumentForEditing(
 		id: string): Observable<Document> {
-			const token = localStorage.getItem('jwtToken'); // Hämta token från localStorage
+			const token = localStorage.getItem('jwtToken');
 			const headers = new HttpHeaders({
-		  'Authorization': `Bearer ${token}` // Skapa en Authorization-header
+		  'Authorization': `Bearer ${token}`
 		});
 		return this.http.get<Document>(`${this.URL}/document/${id}/edit`, { headers, withCredentials: true });
 	}
