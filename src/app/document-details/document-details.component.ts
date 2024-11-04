@@ -16,11 +16,11 @@ import { InviteUserComponent } from "app/invite-user/invite-user.component";
 
 	imports: [CommonModule, ReactiveFormsModule, NgIf, FormsModule, ContentModifierComponent, InviteUserComponent],
 	template: `
-		<app-invite-user
-		[documentId]="currentDocument._id"
-		(invitationSent)="onInvitationSent()">
-		</app-invite-user>
 		@if (richTextAllowed) {
+			<app-invite-user
+			[documentId]="currentDocument._id"
+			(invitationSent)="onInvitationSent()">
+			</app-invite-user>
 			<section class="text-fields" *ngIf="document$ | async as document">
 				<input
 				type="text"
