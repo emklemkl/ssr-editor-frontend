@@ -3,7 +3,7 @@ import { ApplicationConfig, importProvidersFrom, provideZoneChangeDetection } fr
 import { provideRouter, withComponentInputBinding } from "@angular/router";
 import { SocketIoConfig, SocketIoModule } from "ngx-socket-io";
 import { routes } from "./app.routes";
-import { environment } from "environments/environment";
+import { environment } from "environments/environment.prod";
 
 const config: SocketIoConfig = { url: environment.BASE_URL };
 // const config: SocketIoConfig = { url: "https://js-emlo-f6byg8hvbvhahgfp.northeurope-01.azurewebsites.net/", options: {} };

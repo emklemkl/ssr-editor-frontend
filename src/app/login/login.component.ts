@@ -30,8 +30,8 @@ export class LoginComponent {
           // Spara JWT i localStorage eller sessionStorage
           localStorage.setItem('jwtToken', token);          
           // Navigera till startsidan efter lyckad inloggning
-          // this.router.navigate(['/']);
-          window.location.href = response.redirectUrl;
+          this.router.navigate(['/']);
+          // window.location.href = response.redirectUrl;
         } else {
           this.errorMessage = 'Inloggningen misslyckades. Token saknas.';
         }
