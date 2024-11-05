@@ -10,10 +10,10 @@ import { LogoutComponent } from '../logout/logout.component';
 	imports: [CommonModule, RouterModule, LogoutComponent],
 	template: `
 		<div class="home-container">
-			<!-- <div *ngIf="user">
-				<p>Inloggad som: {{ user.email }}</p>
+			<div *ngIf="user" style="display: flex;flex-direction: row;align-content: center;align-items: center;gap: 1rem;"  >
 				<app-logout></app-logout>
-			</div> -->
+				<p>Inloggad som: {{ user.email }}</p>
+			</div>
 		</div>
 		<button type="button" *ngIf="!user" (click)="goToLogin()">Logga in</button>
 		<h1>Welcome to Emlo docs</h1>

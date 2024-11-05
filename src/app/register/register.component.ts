@@ -34,7 +34,7 @@ export class RegisterComponent {
         // Navigera till inloggningssidan efter 2 sekunder
         setTimeout(() => {
           this.router.navigate(['/login']);
-        }, 2000);
+        }, 1000);
       },
       error: (error) => {
         console.error('Registrering misslyckades:', error);
