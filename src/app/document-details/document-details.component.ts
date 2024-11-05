@@ -17,10 +17,6 @@ import { InviteUserComponent } from "app/invite-user/invite-user.component";
 	imports: [CommonModule, ReactiveFormsModule, NgIf, FormsModule, ContentModifierComponent, InviteUserComponent],
 	template: `
 		@if (richTextAllowed) {
-			<app-invite-user
-			[documentId]="currentDocument._id"
-			(invitationSent)="onInvitationSent()">
-			</app-invite-user>
 			<section class="text-fields" *ngIf="document$ | async as document">
 				<input
 				type="text"
@@ -34,6 +30,10 @@ import { InviteUserComponent } from "app/invite-user/invite-user.component";
 					<button type="button" (click)="spanWrapper('cursive')" class="button-mod cursive">k</button>
 					<button type="button" (click)="spanWrapper('underscore')" class="button-mod underscore">U</button>
 					<button type="button" (click)="spanWrapper('comment')" class="button-mod">Comment</button>
+					<app-invite-user
+					[documentId]="currentDocument._id"
+					(invitationSent)="onInvitationSent()">
+					</app-invite-user>
 				</div>
 				<div
 					contenteditable="true"
@@ -118,30 +118,6 @@ export class DocumentDetailsComponent implements OnInit, OnChanges {
 			console.error(`No span found with selector: ${querySel}`);
 		}
 	}
-	// deleteComment(idToRemove: string) {
-	// 	console.log("idToRemove", idToRemove);
-	// 	const querySel = `#spanId${idToRemove}`;
-	// 	const container = document.createElement("div");
-	// 	container.innerHTML = this.newestContent;
-	// 	let spanToRemove: Element | null = container.querySelector(`#spanId${idToRemove}`);
-	// 	if (spanToRemove) {
-	// 		spanToRemove.replaceWith(spanToRemove.textContent || "");
-	// 		this.cdr.detectChanges();
-	// 		// this.updateEditableDivContent()
-	// 		const editableDiv = document.querySelector(".editable-content") as HTMLElement;
-	// 		this.commentDeleted.emit(idToRemove);
-	// 		setTimeout(() => {
-	// 			this.currentDocument.content = container.innerHTML;
-	// 			this.newestContent = container.innerHTML;
-	// 			editableDiv.innerHTML = container.innerHTML;
-	// 			this.submitUpdateDoc(container.innerHTML);
-	// 		}, 500);
-	// 		// this.ngOnInit();
-	// 		// this.updateEditableDivContent();
-	// 	} else {
-	// 		console.error(`No span found with selector: ${querySel}`);
-	// 	}
-	// }
 
 	ngOnInit(): void {
 		this.document$.subscribe((document) => {
