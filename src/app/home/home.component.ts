@@ -2,21 +2,23 @@ import { Component, OnInit } from "@angular/core";
 import { Router, RouterModule } from "@angular/router";
 import { AuthService } from '@services/auth.service';
 import { CommonModule } from "@angular/common";
+import { LogoutComponent } from '../logout/logout.component';
 
 @Component({
 	selector: "app-home",
 	standalone: true,
-	imports: [CommonModule, RouterModule],
+	imports: [CommonModule, RouterModule, LogoutComponent],
 	template: `
 		<div class="home-container">
 			<div *ngIf="user">
 				<p>Inloggad som: {{ user.email }}</p>
+				<app-logout></app-logout>
 			</div>
 		</div>
-
+		<button type="button" *ngIf="!user" (click)="goToLogin()">Logga in</button>
 		<h1>Welcome to Emlo docs</h1>
-		<p>Get an overview of your documents</p>
-		<div class="container">
+		<div class="container" *ngIf="user">
+			<p>Get an overview of your documents</p>
 			<a [routerLink]="['/document', 'all']" class="button-link">Show documents</a>
 		</div>
 	`,
