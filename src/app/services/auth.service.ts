@@ -52,7 +52,7 @@ login(email: string, password: string): Observable<any> {
 
   sendInvitation(documentId: string, email: string): Observable<any> {
 	const apiUrl = `${this.baseUrl}/document/${documentId}/invite`;
-	const token = localStorage.getItem('jwtToken');
+	const token = localStorage.getItem(this.tokenKey);
 
 	if (!token) {
 		console.error('Ingen JWT-token hittades i localStorage');
@@ -78,7 +78,8 @@ login(email: string, password: string): Observable<any> {
   }
 
   logout() {
-    localStorage.removeItem('jwtToken');
+    // localStorage.removeItem(this.tokenKey);
+	this.clearToken();
     this.router.navigate(['/login']);
   }
 }
