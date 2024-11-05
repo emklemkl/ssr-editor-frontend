@@ -55,5 +55,9 @@ export class HomeComponent implements OnInit {
 			console.log("Användaren är INTE inloggad.");
 		}
 	}
+
+	goToLogin() {
+		this.router.navigate(['/login']);
+	  }
 	
 }

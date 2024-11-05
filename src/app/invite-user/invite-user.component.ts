@@ -35,6 +35,8 @@ export class InviteUserComponent {
 
     this.authService.sendInvitation(this.documentId, this.inviteEmail).subscribe({
       next: (response) => {
+        console.log('Response invite:', response);
+        
         console.log('Inbjudan skickad:', response);
         alert('Inbjudan skickad till användaren!');
       },
